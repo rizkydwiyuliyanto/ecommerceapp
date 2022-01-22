@@ -1,35 +1,60 @@
 import react from "react";
 import Styled from "styled-components";
+import { useEffect,useRef } from "react";
 
 const Navbar = () => {
+  const RefNavbar = useRef();
+  const scroll = () => {
+    if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
+      RefNavbar.current.className = "test"
+      console.log("ok")
+  }else {
+      RefNavbar.current.className = "test2"
+  }
+  }
+
+  useEffect(() => {
+    window.addEventListener("scroll",scroll)
+    return () => window.removeEventListener("scroll",scroll)
+  })
+
   return (
-    
-    <NavbarParent>
+    <NavbarParent ref={RefNavbar}>
+     <div style={{
+       "display":"flex",
+       "justifyContent":'space-between',
+       "width":"80%",
+       "border":"unset",
+       "margin":"0 auto"
+     }}>
       <Logo>
         <h2 style={{"color":"#5E9B26"}}>Jualpupuk</h2>
       </Logo>
       <NavbarChild>
         <a>Home</a>
-        <a>Cara gunakan</a>
         <a>Harga</a>
       </NavbarChild>
+      </div>
     </NavbarParent>
   );
 };
 
 const NavbarParent = Styled.div`
-    display: flex;
-    justify-content: space-between;
     border: unset;
-    margin-top: 1em;
+    padding:0.60em 0;
     position: fixed;
     top: 0;
-  width: 80%;
+    width: 100%;
 `;
 const Logo = Styled.div`
     display: block;
     width: 60%;
     border: unset;
+    h2 {
+      :hover {
+        cursor: default;
+      }
+    }
 `;
 
 const NavbarChild = Styled.div`
@@ -42,15 +67,16 @@ const NavbarChild = Styled.div`
     a {
         width: 30%;          
         border: unset;
-        :nth-child(1){
-            text-align: left;
-        }
-        :nth-child(2){
-            text-align: center;
-        }
-        :nth-child(3){
-            text-align: right;
-        }
+        text-align: right;
+        // :nth-child(1){
+        //     text-align: left;
+        // }
+        // :nth-child(2){
+        //     text-align: right;
+        // }
+        // :nth-child(3){
+        //     text-align: right;
+        // }
         :hover {
           color: #5E9B26;
           cursor: pointer;

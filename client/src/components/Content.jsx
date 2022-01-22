@@ -1,41 +1,49 @@
 import React from "react";
 import Styled from "styled-components";
-import { useState,useEffect } from 'react';
-import p1 from './produk.png'
-import p2 from './produk2.png'
-import p3 from './produk3.png'
+import { useState, useEffect, useRef } from "react";
+import p1 from "./produk.png";
+import p2 from "./produk2.png";
+import p3 from "./produk3.png";
 const Content = () => {
-
   const [count, setCount] = useState(1);
   const [loading, setLoading] = useState(true);
-  useEffect(()=> {
-     console.log(count) 
-     image = items.find(c => {
-       return c.id === count;
-     })
-     setLoading(false)
-  }, loading)
- 
+  let Ref = useRef([]);
+
+  useEffect(() => {
+    console.log(count);
+    setLoading(false);
+    for (let i = 0; i < items.length; i++) {
+      if (Ref.current[i].accessKey == count) {
+        Ref.current[i].className = "active";
+      } else {
+        Ref.current[i].className = "notActive";
+      }
+    }
+  });
+
   let items = [
     {
-      "id":1,
-      "picture": p1,
-      "bahan":"padat"
+      id: 1,
+      picture: p1,
+      bahan: "Pupuk padat",
+      harga: "Rp15.000",
     },
     {
-      "id":2,
-      "picture": p2,
-      "bahan":"padat"
+      id: 2,
+      picture: p2,
+      bahan: "Pupuk padat",
+      harga: "Rp15.000",
     },
     {
-      "id":3,
-      "picture": p3,
-      "bahan":"cair"
-    }
-  ]
-  let image = items.find(c => {
+      id: 3,
+      picture: p3,
+      bahan: "Pupuk cair",
+      harga: "Rp14.000",
+    },
+  ];
+  let image = items.find((c) => {
     return c.id === count;
-  })
+  });
   return (
     <>
       <Parent>
@@ -45,23 +53,74 @@ const Content = () => {
             <a>Dari limbah sampah yang difermantasikan</a>
           </Banner>
           <Image>
-            <div style={{height:"400px", "border":"unset"}}>
-              {loading? <a>Loading</a> :<img src={image.picture} width={"310px"} />}
+            <div style={{ height: "400px", border: "unset" }}>
+              {loading ? (
+                <a>Loading</a>
+              ) : (
+                <img src={image.picture} width={"310px"} />
+              )}
             </div>
             <Product>
-              {items.map((x) => {
+              {items.map((x, idx) => {
                 return (
-                  <div onClick={() => {
-                    setCount(x.id)
-                  }}>
-                    <img src={x.picture} width={"50px"} height={"50px"}/>
+                  <div
+                    accessKey={idx + 1}
+                    ref={(el) => (Ref.current[idx] = el)}
+                    onClick={() => {
+                      setCount(x.id);
+                    }}
+                  >
+                    <img src={x.picture} width={"50px"} height={"50px"} />
                     <a>{x.bahan}</a>
+                    {/* <a>Rp.12000</a> */}
                   </div>
-                )
+                );
               })}
             </Product>
           </Image>
         </Child>
+        {items.map((x) => {
+          return (
+            <Child>
+              <Image>
+                <img src={x.picture} width={"350px"} />
+              </Image>
+              <Desc>
+                <h2
+                  style={{
+                    marginBottom: "0.25em",
+                  }}
+                >
+                  {x.bahan}
+                </h2>
+                <a style={{ fontSize: "1.2rem", color: "#5B5B5B" }}>
+                  {x.harga}
+                </a>
+                <a style={{ color: "#5E9B26", fontWeight: "bold" }}>
+                  Deskripsi
+                </a>
+                <a>
+                  Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                  Blanditiis ad reprehenderit optio obcaecati libero ipsam ut
+                  aliquam error quae delectus, assumenda id, maiores, quas
+                  facere fuga ex eveniet aliquid at?
+                </a>
+                <Button>
+                  <img src={"whatsapp2.png"} width={"15px"} />
+                  <a
+                    style={{
+                      position: "relative",
+                      top: "-2px",
+                    }}
+                  >
+                    {" "}
+                    WHATSAPP
+                  </a>
+                </Button>
+              </Desc>
+            </Child>
+          );
+        })}
       </Parent>
     </>
   );
@@ -119,11 +178,34 @@ const Product = Styled.div`
        }
        border-radius: 5px;
        padding:0.2em 0;
-       border: 2px solid #020502;
        :hover {
           border: 2px solid #5E9B26;
           cursor: pointer;
        }
    }
+`;
+
+const Desc = Styled.div`
+    display: flex;
+    border: unset;
+    flex-direction: column;
+    width: 50%;
+    justify-content: center;
+    a {
+      margin: 0.2em 0;
+    }
+`;
+const Button = Styled.button`
+background-color:#44CB77;
+color:#F4F4F4;
+border:none;
+width:150px;
+padding:1em 0;
+margin-top:2em;
+border-radius: 5px;
+:hover {
+  cursor: pointer;
+  background-color:#3cb66b;
+}
 `;
 export default Content;

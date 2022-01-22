@@ -1,5 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300&family=Mulish:wght@300&family=Nanum+Gothic&family=Raleway:wght@300&display=swap');
+
 .App {
   text-align: center;
+}
+
+body {
+  font-family: 'Mulish';
 }
 
 .App-logo {
@@ -35,4 +41,29 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.active {
+  border: 2px solid #5E9B26;
+}
+
+.notActive {
+  border: 2px solid #F4F4F4;
+}
+
+.test {
+  border: unset;
+  padding:0.60em 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: #F4F4F4;
+  box-shadow: 0px 0.40px 2px 2px rgb(190, 190, 190);
+}
+.test2 {
+  border: unset;
+  padding:0.60em 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
 }
