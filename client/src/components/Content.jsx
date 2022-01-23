@@ -4,6 +4,8 @@ import { useState, useEffect, useRef } from "react";
 import p1 from "./produk.png";
 import p2 from "./produk2.png";
 import p3 from "./produk3.png";
+import Loading from "./Loading";
+
 const Content = () => {
   const [count, setCount] = useState(1);
   const [loading, setLoading] = useState(true);
@@ -44,6 +46,7 @@ const Content = () => {
   let image = items.find((c) => {
     return c.id === count;
   });
+  
   return (
     <>
       <Parent>
@@ -54,11 +57,9 @@ const Content = () => {
           </Banner>
           <Image>
             <div style={{ height: "400px", border: "unset" }}>
-              {loading ? (
-                <a>Loading</a>
-              ) : (
+
                 <img src={image.picture} width={"310px"} />
-              )}
+              
             </div>
             <Product>
               {items.map((x, idx) => {
@@ -114,7 +115,7 @@ const Content = () => {
                     }}
                   >
                     {" "}
-                    WHATSAPP
+                    Beli sekarang
                   </a>
                 </Button>
               </Desc>
