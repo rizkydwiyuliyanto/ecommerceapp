@@ -1,6 +1,7 @@
 import react from "react";
 import Styled from "styled-components";
 import { useEffect,useRef } from "react";
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   const RefNavbar = useRef();
@@ -17,7 +18,9 @@ const Navbar = () => {
     window.addEventListener("scroll",scroll)
     return () => window.removeEventListener("scroll",scroll)
   })
-
+  let styles = {
+    "textDecoration":"none"
+  }
   return (
     <NavbarParent ref={RefNavbar}>
      <div style={{
@@ -31,8 +34,9 @@ const Navbar = () => {
         <h2 style={{"color":"#5E9B26"}}>Jualpupuk</h2>
       </Logo>
       <NavbarChild>
-        <a>Home</a>
+        <a><Link style={styles} to={"/"}>Home</Link></a>
         <a>Harga</a>
+        <a><Link style={styles} to={"/login"}>Login</Link></a>
       </NavbarChild>
       </div>
     </NavbarParent>
