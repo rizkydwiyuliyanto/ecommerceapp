@@ -1,9 +1,17 @@
 import react from "react"
+import Navbaradmin from "../components/Navbaradmin";
+import { useState } from 'react';
+import Login from "./Login";
 
-const Admin = () =>{
+const Admin = (props) =>{
+    
     return (
         <>
-          <a>Admin</a>
+        {/* {!props.Auth?<Login/>:<Navbaradmin/>} */}
+          <Navbaradmin/>
+          <div style={{"display":"flex", "justifyContent":"center", "alignItems":"center","height":"100vh"}}>
+            <h3>Dashboard</h3>
+          </div>
         </>
     )
 }

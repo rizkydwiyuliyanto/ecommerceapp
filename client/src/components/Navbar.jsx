@@ -31,7 +31,7 @@ const Navbar = () => {
        "margin":"0 auto"
      }}>
       <Logo>
-        <h2 style={{"color":"#5E9B26"}}>Jualpupuk</h2>
+        <h2 style={{"color":"#5E9B26"}}>Your logo</h2>
       </Logo>
       <NavbarChild>
         <a><Link style={styles} to={"/"}>Home</Link></a>

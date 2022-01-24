@@ -84,7 +84,7 @@ const Content = () => {
           return (
             <Child>
               <Image>
-                <img src={x.picture} width={"350px"} />
+                <img src={x.picture} width={"320px"} />
               </Image>
               <Desc>
                 <h2

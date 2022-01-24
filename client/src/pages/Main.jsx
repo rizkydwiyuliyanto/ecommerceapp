@@ -13,8 +13,10 @@ const Main = () => {
       setLoading(false);
     }, 500);
   }, [loading]);
+
   return (
     <>
+      
       <Navbar />
       {loading ? (
         <Loading />
