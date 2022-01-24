@@ -12,6 +12,9 @@ const Login = (props) => {
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
     let navigate = useNavigate()
+    function test(x){
+      props.Islogin(x)
+    }
     useEffect(() => {
          
         setTimeout(() => {
@@ -40,6 +43,7 @@ const Login = (props) => {
           return err.response;
         });
       if (data.status == 200) {
+        test(true)
         navigate('/admin')
         // alert("anda berhasil login")
       } else if (data.status == 400){

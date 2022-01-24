@@ -34,7 +34,7 @@ const Navbaradmin = () => {
         <h2 style={{"color":"#5E9B26"}}>Your logo</h2>
       </Logo>
       <NavbarChild>
-        <a><Link style={styles} to={"/"}>Home</Link></a>
+        <a><Link style={styles} to={"/admin"}>Home</Link></a>
         <a>Harga</a>
         <a>Profile</a>
       </NavbarChild>
