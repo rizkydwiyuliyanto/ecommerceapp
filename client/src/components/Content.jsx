@@ -6,7 +6,7 @@ import p2 from "./produk2.png";
 import p3 from "./produk3.png";
 import Loading from "./Loading";
 
-const Content = () => {
+const Content = (props) => {
   const [count, setCount] = useState(1);
   const [loading, setLoading] = useState(true);
   let Ref = useRef([]);
@@ -49,6 +49,7 @@ const Content = () => {
   
   return (
     <>
+   
       <Parent>
         <Child>
           <Banner>
@@ -97,16 +98,9 @@ const Content = () => {
                 <a style={{ fontSize: "1.2rem", color: "#5B5B5B" }}>
                   {x.harga}
                 </a>
-                <a style={{ color: "#5E9B26", fontWeight: "bold" }}>
-                  Deskripsi
-                </a>
-                <a>
-                  Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                  Blanditiis ad reprehenderit optio obcaecati libero ipsam ut
-                  aliquam error quae delectus, assumenda id, maiores, quas
-                  facere fuga ex eveniet aliquid at?
-                </a>
-                <Button>
+                <Button onClick={() => {
+                   props.SetForm(!props.Form)
+                }}>
                   <img src={"whatsapp2.png"} width={"15px"} />
                   <a
                     style={{
@@ -118,6 +112,15 @@ const Content = () => {
                     Beli sekarang
                   </a>
                 </Button>
+                <a style={{ color: "#5E9B26", fontWeight: "bold" }}>
+                  Deskripsi
+                </a>
+                <a>
+                  Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                  Blanditiis ad reprehenderit optio obcaecati libero ipsam ut
+                  aliquam error quae delectus, assumenda id, maiores, quas
+                  facere fuga ex eveniet aliquid at?
+                </a>
               </Desc>
             </Child>
           );
@@ -202,11 +205,13 @@ color:#F4F4F4;
 border:none;
 width:150px;
 padding:1em 0;
-margin-top:2em;
+margin:2em 0;
 border-radius: 5px;
 :hover {
   cursor: pointer;
   background-color:#3cb66b;
 }
 `;
+
+
 export default Content;

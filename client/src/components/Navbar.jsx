@@ -35,7 +35,7 @@ const Navbar = () => {
       </Logo>
       <NavbarChild>
         <a><Link style={styles} to={"/"}>Home</Link></a>
-        <a>Harga</a>
+        <a>Produk kami</a>
         <a><Link style={styles} to={"/login"}>Login</Link></a>
       </NavbarChild>
       </div>
@@ -71,19 +71,19 @@ const NavbarChild = Styled.div`
     a {
         width: 30%;          
         border: unset;
-        text-align: right;
-        // :nth-child(1){
-        //     text-align: left;
-        // }
-        // :nth-child(2){
-        //     text-align: right;
-        // }
-        // :nth-child(3){
-        //     text-align: right;
-        // }
+   
         :hover {
           color: #5E9B26;
           cursor: pointer;
+        }
+        :nth-child(1) {
+          text-align: left;
+        }
+        :nth-child(2) {
+          text-align: center;
+        }
+        :nth-child(3) {
+          text-align: right;
         }
     }
 `;

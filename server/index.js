@@ -56,6 +56,35 @@ app.get("/admin", (req, res) => {
     })
 })
 
+app.post("/transaksi/:barang/:pembeli", (req, res) => {
+    let barang = req.params.barang;
+    let pembeli = req.params.pembeli;
+    const query = 'INSERT INTO `transaksi` (`id_transaksi`, `id_barang`, `id_pembeli`, `total_harga`) VALUES (NULL, ?, ?, ?); '
+    db.query(query, [barang, pembeli], (err, result) => {
+        if (err){
+            console.log(err)
+        }else{
+            res.send(result)
+        }
+    })
+})
+
+app.get("/transaksi/:id_transaksi", (req, res) => {
+    let transaksi = req.params.id_transaksi;
+    const query = "SELECT  transaksi.id_transaksi, pembeli.nama_pembeli, barang.nama_barang, transaksi.total_harga FROM pembeli, transaksi, barang WHERE transaksi.id_transaksi = ? AND pembeli.id_pembeli = transaksi.id_pembeli AND barang.id_barang = transaksi.id_barang;"
+    db.query(query, [transaksi], (err, result) => {
+        if (err){
+            console.log(err)
+        }else{
+            if (!result) {
+                res.send("Transaksi tidak ditemukan")
+            }else{
+                res.send(result)
+            }
+        }
+    })
+})
+
 app.listen(3005, ()=>{
     console.log("server running on port 3005")
 })

@@ -5,7 +5,7 @@ import Login from "./Login";
 import { useNavigate } from "react-router-dom";
 
 const Admin = (props) =>{
-
+    
     return (
         <>
         {!props.Login?<Login Islogin = {props.Islogin}/>:
