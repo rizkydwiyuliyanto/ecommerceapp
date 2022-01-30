@@ -3,8 +3,12 @@ import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Main from './pages/Main';
 import Login from './pages/Login';
-import Admin from './pages/Admin'
+import Admin from './pages/Admin';
+import Transaksiadmin from './pages/Transaksiadmin';
+import Barangadmin from './pages/Barangadmin';
 import { useState } from 'react';
+ 
+ 
 
 function App() {
   const [isLogin, setIslogin] = useState(false);
@@ -16,6 +20,12 @@ function App() {
                setIslogin(x)
             }}/>}/>
             <Route path="/admin" element={<Admin Login = {isLogin} Islogin = {(x) =>{
+               setIslogin(x)
+            }}/>}/>
+            <Route path="/admin/transaksi" element={<Transaksiadmin Login = {isLogin} Islogin = {(x) =>{
+               setIslogin(x)
+            }}/>}/>
+            <Route path="/admin/barang" element={<Barangadmin Login = {isLogin} Islogin = {(x) =>{
                setIslogin(x)
             }}/>}/>
          </Routes>

@@ -46,9 +46,9 @@ const Form = (props) => {
     let textAreaStyle = {
         "border":"0.5px solid #bfbfbf",
         "padding":"0.5em 0.7em",
-        "margin":"0.2em 0",
+        "marginTop":"0.2em",
         "borderRadius":"5px",
-        "height": "200px",
+        "height": "100px",
    
         "resize": "none"
     }
@@ -57,11 +57,12 @@ const Form = (props) => {
      <>
         {!props.Form?"":
         <FormParent>
-         <div style={{"backgroundColor":"#f4f4f4","width":"35%","boxShadow":"0px 0px 4px 0px black","padding":"2em 2em 1em 2em", "borderRadius":"5px"}}>
+         <div style={{"backgroundColor":"#f4f4f4","width":"45%","boxShadow":"0px 0px 4px 0px black","padding":"2em 2em 1em 2em", "borderRadius":"5px"}}>
          <div style={{"display":"flex","justifyContent":"space-between"}}>
              <h3 style={{"textAlign":"center"}}>Pesan lewat Whatsapp</h3>
              <a style={linkStyle} onMouseEnter={handleHover} onMouseLeave={handleHover} onClick={() =>{
                  handleHover()
+                 setData(initialState)
                  props.SetForm(!props.Form)
              }}>
                  <img width = {"15px"}src={"close.png"}/>
@@ -74,14 +75,14 @@ const Form = (props) => {
                     </Input>
                     <Input>
                      <label for="no.telp">no.telp</label>
-                     <input name="no.telp" style={inputStyle} type={"text"} value={data.nomor_telp} id="alamat" onChange={handleChange}/>
+                     <input name="nomor_telp" style={inputStyle} type={"text"} value={data.nomor_telp} id="alamat" onChange={handleChange}/>
                     </Input>
                     <Input>
                      <label for="alamat">Alamat</label>
-                     <input name="alamat" style={inputStyle} type={"text"} value={data.alamat} id="alamat" onChange={handleChange}/>
+                     <textarea name="alamat" style={textAreaStyle} type={"text"} value={data.alamat} id="alamat" onChange={handleChange}/>
                     </Input>
                     <Input>
-                     <label for="catanta">catatan</label>
+                     <label for="catatan">catatan (optional)</label>
                      <textarea name="catatan" style={textAreaStyle} value={data.catatan} id="catatan" onChange={handleChange}/>
                     </Input>
                     <Button>
@@ -98,12 +99,12 @@ const FormParent = Styled.div `
   height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: start;
   position: fixed;
   width: 100%;
   background-color: #0000009d;
   border: unset;
-  z-index: 100;
+  z-index: 150;
   h2 {
     border: 1px solid black;
   }
@@ -111,16 +112,18 @@ const FormParent = Styled.div `
 const Input = Styled.div `
     display: flex;
     flex-direction: column;
-    height: 50px;
+ 
     margin-top: 1.2em;
+    label {
+        font-size: 0.95rem;
+    }
 `
 const Button = Styled.div `
     width: unset;
     margin: 2.5em 0;
     text-align: center;
     background-color: #5E9B26;
-    position: relative;
-    top: 10.5px;
+ 
     border-radius: 5px;
     button {
         background: none;
