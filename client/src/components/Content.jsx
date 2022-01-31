@@ -21,6 +21,7 @@ const Content = (props) => {
     })
     if (loading){
       getData();
+      console.log(data)
     }
     // for (let i = 0; i < items.length; i++) {
     //   if (Ref.current[i].accessKey == count) {
@@ -111,9 +112,9 @@ const Content = (props) => {
         {data.map((x) => {
           return (
             <Child >
-              {/* <Image>
-                <img src={x.picture} width={"320px"} />
-              </Image> */}
+              <Image>
+                <img src={x.gambar_barang} width={"320px"} />
+              </Image>
               <Desc data-aos="fade-right">
                 <h2
                   style={{

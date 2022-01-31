@@ -3,6 +3,7 @@ import Navbaradmin from "../components/Navbaradmin";
 import AdminContent from "../components/Admincontent";
 import Profile from "../components/Profile";
 import Styled from "styled-components";
+import FormInput from "../components/FormInput";
 import { useState, useEffect } from "react";
 import Axios from "axios";
 import p1 from "../components/produk.png";
@@ -15,10 +16,10 @@ let style = {
 };
 const Barangadmin = () => {
   const [data, setData] = useState([]);
-  useEffect(() => {
-    getData()
-    console.log(data)
-  }, [JSON.stringify(data)])
+  // useEffect(() => {
+  //   getData()
+  //   console.log(data)
+  // }, [JSON.stringify(data)])
   const getData = async() => {
       let status = await Axios.get("http://localhost:3005/api/barang").then((res) => {
           return res.status
@@ -60,6 +61,7 @@ const Barangadmin = () => {
           <h2>Barang</h2>
         <Profile />
         </div>
+        <FormInput/>
         {/* <Table className="admin">
           <tr style={{"borderBottom":"1px solid black","margin":"1em","height":"40px"}}>
               <th>#</th>
@@ -80,7 +82,7 @@ const Barangadmin = () => {
               )
           })}
         </Table> */}
-     <div style={{"display":"flex","justifyContent":"space-between","width":"90%","marginTop":"3em"}}>
+     {/* <div style={{"display":"flex","justifyContent":"space-between","width":"90%","marginTop":"3em"}}>
          {items.map((x, idx)=> {
              return (
                 <Card>
@@ -94,7 +96,7 @@ const Barangadmin = () => {
                 </Card>
              )
          })}
-     </div>
+     </div> */}
       </AdminContent>
     </>
   );

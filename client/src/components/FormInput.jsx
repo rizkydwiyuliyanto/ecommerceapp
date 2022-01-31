@@ -1,7 +1,7 @@
 import react from "react";
 import Styled from 'styled-components';
 import { useState, useEffect } from 'react';
-
+import Axios from "axios";
 const FormInput = () => {
     const initialState = {
         "namaBarang":"",
@@ -10,12 +10,16 @@ const FormInput = () => {
         "kategoriBarang":"",
         "gambar":""
     }
+
     const [data, setData] = useState(initialState);
     const [profile, setProfile] = useState([]);
     const [loading, setLoading] = useState(true);
     const [saveImage, setSaveImage] = useState()
     useEffect(() => {
        console.log(data)
+       Object.entries(initialState).forEach((x) => {
+        console.log(x);
+    })
     //    console.log(profile)
     })
     const handleUploadChange = (e) => {
@@ -58,13 +62,16 @@ const FormInput = () => {
     const handleClick = async() => {
         console.log("ok");
         let formData = new FormData();
-        formData.append("gambar", data.gambar)
-        const d = await Axios.post("http://localhost:3005/inputBarang", {
-            namaBarang : data.namaBarang,
-            deskBarang : data.deskBarang,
-            harga : data.harga,
-            kategoriBarang: data.kategoriBarang,
-            gambar: formData
+        Object.entries(data).forEach((x) => {
+            formData.append(x[0],x[1])
+        })
+
+        const d = await Axios.post("http://localhost:3005/inputBarang",formData, {
+            headers: {
+                'accept': 'application/json',
+                'Accept-Language': 'en-US,en;q=0.8',
+                'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
+              }
         }).catch((err) =>{
             return err.response
         })
@@ -76,6 +83,10 @@ const FormInput = () => {
             alert(d.data)
         }
     }
+    let style = {
+        border: "1px solid #BBC4E4",
+        width: "100%",
+      };
     return (
         <>
              <h3 style={{"margin":"2em 0em 1em 0"}}>Input Barang</h3>
@@ -84,34 +95,34 @@ const FormInput = () => {
                 <Input>
                    <label>Nama barang</label>
                    <div style={style}>
-                      <input name="namaBarang" type={"text"} onChange={handleChange}/>
+                      <input value={data.namaBarang} name="namaBarang" type={"text"} onChange={handleChange}/>
                    </div>
                 </Input>
                 <Input>
                    <label>Deskripsi barang</label>
                 <div style={style}>
-                   <input name="deskBarang" type={"text"} onChange={handleChange}/>
+                   <input value={data.deskBarang} name="deskBarang" type={"text"} onChange={handleChange}/>
                 </div>
                 </Input>
                 <Input>
                    <label>harga</label>
                    <div style={style}>
-                   <input name="harga" type={"text"} onChange={handleChange}/>
+                   <input value= {data.harga} name="harga" type={"text"} onChange={handleChange}/>
                    </div>
                 </Input>
                 <Input>
                    <label>Kategori barang</label>
                    <div style={style}>
-                   <input name="kategoriBarang" type={"text"} onChange={handleChange}/>
+                   <input value={data.kategoriBarang} name="kategoriBarang" type={"text"} onChange={handleChange}/>
                    </div>
                 </Input>
                 <Input>
                    <label>Gambar</label>
                    <div style={style}>
-                   <input name="gambar" type={"file"} accept="image/*" onChange={handleUploadChange}/>
+                   <input   name="gambar" type={"file"} accept="image/*" onChange={handleUploadChange}/>
                    </div>
                 </Input>
-                <Button onClick={handleClick}>Input</Button>
+                <Button onClick={handleClick} htmlType="submit">Input</Button>
             </form>
           </Form>
         </>

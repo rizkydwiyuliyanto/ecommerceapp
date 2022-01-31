@@ -93,11 +93,11 @@ app.post("/inputBarang",upload.single("gambar"), (req, res) => {
     namaBarang: Joi.string().required(),
     deskBarang: Joi.string().required(),
     harga: Joi.string().required(),
-    kategoriBarang: Joi.string().required()
+    kategoriBarang: Joi.string().required(),
   });
   let result = schema.validate(req.body);
-  // let finalImageURL = req.protocol +"://" + req.get("host") + "/uploads/" +req.file.filename;
-  // res.send({ message:"success",image: finalImageURL })
+  let finalImageURL = req.protocol +"://" + req.get("host") + "/uploads/" +req.file.filename;
+
   if (result.error) {
     res.status(400).send(result.error.details[0].path[0]+" tidak boleh kosong");
     return;
@@ -106,7 +106,7 @@ app.post("/inputBarang",upload.single("gambar"), (req, res) => {
   const deskBarang = req.body.deskBarang;
   const harga = req.body.harga;
   const kategoriBarang = req.body.kategoriBarang;
-  const gambar = req.file.filename;
+  const gambar =finalImageURL;
   const sqlQuery =
     "INSERT INTO `barang` (`id_barang`, `nama_barang`, `deskripsi_barang`, `harga_barang`, `stok_barang`, `kategori_barang`, `gambar_barang`) VALUES (NULL, ?, ?, ?, '', ?,?)";
   db.query(
