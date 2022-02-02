@@ -16,10 +16,10 @@ let style = {
 };
 const Barangadmin = () => {
   const [data, setData] = useState([]);
-  // useEffect(() => {
-  //   getData()
-  //   console.log(data)
-  // }, [JSON.stringify(data)])
+  useEffect(() => {
+    getData()
+    console.log(data)
+  }, [JSON.stringify(data)])
   const getData = async() => {
       let status = await Axios.get("http://localhost:3005/api/barang").then((res) => {
           return res.status
@@ -62,7 +62,7 @@ const Barangadmin = () => {
         <Profile />
         </div>
         <FormInput/>
-        {/* <Table className="admin">
+        <Table className="admin">
           <tr style={{"borderBottom":"1px solid black","margin":"1em","height":"40px"}}>
               <th>#</th>
               <th>Nama barang</th>
@@ -81,7 +81,7 @@ const Barangadmin = () => {
                   </tr>
               )
           })}
-        </Table> */}
+        </Table>
      {/* <div style={{"display":"flex","justifyContent":"space-between","width":"90%","marginTop":"3em"}}>
          {items.map((x, idx)=> {
              return (

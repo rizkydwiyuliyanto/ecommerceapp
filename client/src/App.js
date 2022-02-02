@@ -7,6 +7,8 @@ import Admin from './pages/Admin';
 import Transaksiadmin from './pages/Transaksiadmin';
 import Barangadmin from './pages/Barangadmin';
 import { useState } from 'react';
+import InputBarang from './pages/InputBarang';
+import LihatBarang from './pages/LihatBarang';
  
  
 
@@ -28,6 +30,8 @@ function App() {
             <Route path="/admin/barang" element={<Barangadmin Login = {isLogin} Islogin = {(x) =>{
                setIslogin(x)
             }}/>}/>
+            <Route path="/admin/inputbarang" element={<InputBarang/>}/>
+            <Route path="/admin/lihatbarang"element={<LihatBarang/>}/>
          </Routes>
       </BrowserRouter>
   );

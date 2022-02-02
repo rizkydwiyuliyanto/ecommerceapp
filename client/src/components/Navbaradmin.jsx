@@ -44,7 +44,11 @@ const Navbaradmin = () => {
         </a>
         <a>
           <img style={{"marginRight":"0.5em"}} src={"/menu.png"} width={"30px"} height={"25px"}/>
-          <Link style={{textDecoration:"none"}} to ="/admin/barang">Barang</Link>
+          <Link style={{textDecoration:"none"}} to ="/admin/inputbarang">Input barang</Link>
+        </a>
+        <a>
+          <img style={{"marginRight":"0.5em"}} src={"/menu.png"} width={"30px"} height={"25px"}/>
+          <Link style={{textDecoration:"none"}} to ="/admin/lihatbarang">Lihat barang</Link>
         </a>
       </NavbarChild>
 
@@ -78,15 +82,15 @@ const Logo = Styled.div`
 
 const NavbarChild = Styled.div`
     display: flex;
-    width: 40%;
+    width: 100%;
     flex-direction: column;
     border: unset;
-    height: 200px;
+    height: 150px;
+    justify-content: space-between;
     a {
         display: flex;
-        width: 30%;      
+        width: 100%;      
         border: unset;
-        height: 50px;
         font-weight: bold;
         font-size: 1.05rem;
         // :nth-child(1){

@@ -84,14 +84,16 @@ const FormInput = () => {
         }
     }
     let style = {
-        border: "1px solid #BBC4E4",
-        width: "100%",
+      
+        width:"50%",
+        display:"flex",
+        justifyContent:"center",
+        alignItems: "center"
       };
     return (
         <>
-             <h3 style={{"margin":"2em 0em 1em 0"}}>Input Barang</h3>
           <Form>
-            <form onSubmit={handleSubmit} style={{"height":"400px","width":"400px","display":"flex","flexDirection":"column"}}>
+            <form onSubmit={handleSubmit} style={{"height":"600px","width":"100%","display":"flex","flexDirection":"column", "justifyContent":"space-between"}}>
                 <Input>
                    <label>Nama barang</label>
                    <div style={style}>
@@ -101,7 +103,7 @@ const FormInput = () => {
                 <Input>
                    <label>Deskripsi barang</label>
                 <div style={style}>
-                   <input value={data.deskBarang} name="deskBarang" type={"text"} onChange={handleChange}/>
+                   <textarea value={data.deskBarang} name="deskBarang" type={"text"} onChange={handleChange}/>
                 </div>
                 </Input>
                 <Input>
@@ -131,26 +133,57 @@ const FormInput = () => {
 
 const Form = Styled.div `
     display: block;
-    background-color: #F4F4F4;
-    width: 45%;
+    
+    width: 90%;
     padding: 1em;
-    box-shadow: 0px 0px 2.5px 1px grey;
+ 
 `
 const Input = Styled.div `
    display: flex;
-   flex-direction: column;
+   border-bottom: 1px solid #b1b1b1;
+   height: 15%;
+   padding: 1em;
+   justify-content: space-between;
+   
    label {
        margin-bottom: 0.5em;
+       border: unset;
+       width: 45%;
+       height: 100%;
+       display: flex;
+       
+       align-items: center;
    }
+   
+   textarea {
+    border-bottom: 1px solid black;
+    width: 100%;
+    border-radius: 5px;
+    border: none;
+    padding: 1em;
+    height: 100%;
+    resize: none;
+    overflow-y: scroll;
+    background-color: #F4F4F4;
+    :focus {
+        outline: none;
+    }
+   }
+
    input {
-     border: none;
+     border-bottom: 1px solid black;
      width: 100%;
-     padding: 0.5em;
+     border-radius: 5px;
+     border: none;
+     padding: 1.2em 1em 1.2em 1em;
+     height: 45%;
+     background-color: #F4F4F4;
      :focus {
          outline: none;
      }
+ 
    }
-   height: 20%;
+  
 
 `
 const Button = Styled.button `

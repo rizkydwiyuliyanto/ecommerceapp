@@ -96,12 +96,12 @@ app.post("/inputBarang",upload.single("gambar"), (req, res) => {
     kategoriBarang: Joi.string().required(),
   });
   let result = schema.validate(req.body);
-  let finalImageURL = req.protocol +"://" + req.get("host") + "/uploads/" +req.file.filename;
-
   if (result.error) {
     res.status(400).send(result.error.details[0].path[0]+" tidak boleh kosong");
     return;
   }
+  let finalImageURL = req.protocol +"://" + req.get("host") + "/uploads/" +req.file.filename;
+
   const namaBarang = req.body.namaBarang;
   const deskBarang = req.body.deskBarang;
   const harga = req.body.harga;
@@ -121,6 +121,18 @@ app.post("/inputBarang",upload.single("gambar"), (req, res) => {
     }
   );
 });
+
+app.delete("api/delete/:id", (req, res) => {
+  let id = req.params.id;
+  let sqlQuery = "DELETE FROM `barang` WHERE `barang`.`id_barang` = ?"
+  db.query(sqlQuery, id, (err, result) => {
+    if (err){
+      console.log(err)
+    }else {
+      res.send(result)
+    }
+  })
+})
 
 app.post("/transaksi/:barang/:pembeli", (req, res) => {
   let barang = req.params.barang;
