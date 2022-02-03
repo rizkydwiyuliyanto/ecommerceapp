@@ -9,6 +9,7 @@ import Barangadmin from './pages/Barangadmin';
 import { useState } from 'react';
 import InputBarang from './pages/InputBarang';
 import LihatBarang from './pages/LihatBarang';
+
  
  
 

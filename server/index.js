@@ -7,6 +7,30 @@ const bodyParser = require("body-parser");
 const multer = require("multer");
 const path = require('path')
 
+const message = (str) => {
+  const insert = (arr, index, newItem) => [
+    // part of the array before the specified index
+    ...arr.slice(0, index),
+    // inserted item
+    newItem,
+    // part of the array after the specified index
+    ...arr.slice(index),
+  ];
+  let result = [];
+  let myStr = str.split('');
+  let length = myStr.length;
+  let a = null;
+  myStr[0] = myStr[0].toUpperCase()
+  for (let i = 0;i < length;i++){
+    a = str.charCodeAt(i)
+    if (a >= 65 &&  a <= 90){
+      myStr[i] = myStr[i].toLowerCase();
+      result = insert(myStr, i, " ")
+    }
+  }
+  return result.join("")
+}
+
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "./public/uploads");
@@ -97,11 +121,10 @@ app.post("/inputBarang",upload.single("gambar"), (req, res) => {
   });
   let result = schema.validate(req.body);
   if (result.error) {
-    res.status(400).send(result.error.details[0].path[0]+" tidak boleh kosong");
+    res.status(400).send(message(result.error.details[0].path[0])+" tidak boleh kosong");
     return;
   }
   let finalImageURL = req.protocol +"://" + req.get("host") + "/uploads/" +req.file.filename;
-
   const namaBarang = req.body.namaBarang;
   const deskBarang = req.body.deskBarang;
   const harga = req.body.harga;

@@ -7,6 +7,9 @@ import p2 from "./produk2.png";
 import p3 from "./produk3.png";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import Slider from 'react-slick';
+import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick-theme.css";
 import Loading from "./Loading";
 
 const Content = (props) => {
@@ -18,45 +21,40 @@ const Content = (props) => {
   useEffect(() => {
     AOS.init({
       duration : 2200
-    })
+    });
     if (loading){
       getData();
       console.log(data)
     }
-    // for (let i = 0; i < items.length; i++) {
-    //   if (Ref.current[i].accessKey == count) {
-    //     Ref.current[i].className = "active";
-    //   } else {
-    //     Ref.current[i].className = "notActive";
-    //   }
-    // }
+    for (let i = 0; i < items.length; i++) {
+      if (Ref.current[i].accessKey == count) {
+        Ref.current[i].className = "active";
+      } else {
+        Ref.current[i].className = "notActive";
+      }
+    }
   }, [count, JSON.stringify(data)]);
 
-  // let items = [
-  //   {
-  //     id: 1,
-  //     picture: p1,
-  //     bahan: data[0].nama_barang,
-  //     harga: data[0].harga_barang,
-  //     deskripsi: data[0].deskripsi_barang
-  //   },
-  //   {
-  //     id: 2,
-  //     picture: p2,
-  //     bahan: data[1].nama_barang,
-  //     harga: data[1].harga_barang,
-  //     deskripsi: data[1].deskripsi_barang
-  //   },
-  //   {
-  //     id: 3,
-  //     picture: p3,
-  //     bahan: "Pupuk cair",
-  //     harga: "Rp14.000",
-  //   },
-  // ];
-  // let image = items.find((c) => {
-  //   return c.id === count;
-  // });
+  let items = [
+    {
+      id: 1,
+      picture: p1,
+
+    },
+    {
+      id: 2,
+      picture: p2,
+
+    },
+    {
+      id: 3,
+      picture: p3,
+
+    },
+  ];
+  let image = items.find((c) => {
+    return c.id === count;
+  });
   const getData = async() => {
     let status = await Axios.get("http://localhost:3005/api/barang").then((res) => {
       return res.status;
@@ -69,13 +67,20 @@ const Content = (props) => {
       setLoading(false);
     }
   }
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1
+  };
   return (
     <>
    
       <Parent>
-        {/* <Child>
+        <Child>
           <Banner>
-            <img style={{"borderRadius":"10px"}} src={"6007b74724c75.jpg"}/>
+            {/* <img style={{"borderRadius":"10px"}} src={"6007b74724c75.jpg"}/> */}
             <h2>Pupuk organik</h2>
             <a>Dari limbah sampah organik yang diolah menjadi pupuk</a>
           </Banner>
@@ -104,7 +109,7 @@ const Content = (props) => {
               })}
             </Product>
           </Image>
-        </Child> */}
+        </Child>
         <div style={{"marginTop":"1.5em","width":"100%","height":"250px", "position":"relative", "display":"flex","justifyContent":"center","alignItems":"center"}}>
             <img style={{"objectFit":"cover","borderRadius":"10px","position":"absolute","zIndex":"-2"}} src={"6007b74724c75.jpg"} width={"100%"} height={"100%"}/>
             <h2 style={{"color":"white","fontWeight":"bold"}}>Produk Kami</h2>
@@ -124,7 +129,7 @@ const Content = (props) => {
                   {x.nama_barang}
                 </h2>
                 <a style={{ fontSize: "1.2rem", color: "#5B5B5B" }}>
-                  {x.harga_barang}
+                  Rp.{x.harga_barang}
                 </a>
                 <Button onClick={() => {
                    props.SetForm(!props.Form)
@@ -143,7 +148,7 @@ const Content = (props) => {
                 <a style={{ color: "#5E9B26", fontWeight: "bold" }}>
                   Deskripsi
                 </a>
-                <a>
+                <a style={{"border":"unset", "height":"100px","overflow-y":"scroll"}}>
                   {x.deskripsi_barang}
                 </a>
               </Desc>
@@ -165,14 +170,15 @@ const Parent = Styled.div`
 const Child = Styled.div`
     display: flex;
     height: 100vh;
+   
+    width: 100%;
 `;
 const Banner = Styled.div`
     display: flex;
     width: 50%;
+     
     flex-direction: column;
     justify-content: center;
-   
-    border: unset;
     h2 {
         font-size: 2rem;
         color: #020502;
@@ -189,7 +195,7 @@ width: 50%;
 flex-direction: column;
 justify-content: center;
 align-items: center;
-border: unset;
+ 
 `;
 const Product = Styled.div`
    display: flex;

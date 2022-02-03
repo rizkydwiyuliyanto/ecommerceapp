@@ -1,6 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300&family=Mulish:wght@300&family=Nanum+Gothic&family=Raleway:wght@300&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300&family=Mulish:wght@300&family=Nanum+Gothic&family=Nunito:wght@300&family=Raleway:wght@300&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300&family=Mulish:wght@300&family=Nanum+Gothic&family=Nunito:wght@300&family=PT+Sans+Narrow&family=Raleway:wght@300&display=swap');
+/* Lato */
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap');
 .App {
   text-align: center;
  
@@ -15,7 +17,7 @@ body {
 }
 
 body {
-  font-family: 'Mulish';
+  font-family: 'Lato';
 }
 
 .App-logo {
@@ -67,7 +69,7 @@ body {
   position: fixed;
   top: 0;
   width: 100%;
-  background-color: #F4F4F4;
+  background-color: white;
   z-index: 100;
   box-shadow: 0px 0.40px 2px 2px rgb(190, 190, 190);
 }
