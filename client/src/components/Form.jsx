@@ -1,20 +1,40 @@
 import React from 'react';
 import Styled from 'styled-components'
 import { useState, useEffect } from 'react';
+import Axios from 'axios';
+
 
 const Form = (props) => {
 
     let initialState = {
-        "nama":"",
+        "namaDepan":"",
+        "namaBelakang":"",
+        "no_telp":"",
         "alamat" :"",
-        "nomor_telp":"",
         "catatan":""
     }
     const [data, setData] = useState(initialState);
     const [isHover, setIsHover] = useState(false);
 
-    const handleSubmit = (e) =>{
+    const handleSubmit = async (e) =>{
         e.preventDefault();
+        let status = await Axios.post(`http://localhost:3005/api/pesan/${props.Barang}`, {
+            namaDepan : data.namaDepan,
+            namaBelakang : data.namaBelakang,
+            no_telp : data.no_telp,
+            alamat : data.alamat,
+            catatan : data.catatan
+        }).then((res) => {
+            return res.status
+        }).catch((err) => {
+            return err.response
+        })
+
+        if (status == 200) {
+            alert("oke")
+        }else if (status == 400) {
+            alert("gagal")
+        }
    }
    const handleChange = (e) => {
        setData({
@@ -52,7 +72,6 @@ const Form = (props) => {
    
         "resize": "none"
     }
-
     return (
      <>
         {!props.Form?"":
@@ -69,13 +88,19 @@ const Form = (props) => {
              </a>
          </div>
                  <form onSubmit={handleSubmit} style={{"display":"flex", "flexDirection":"column"}}>
+                    <div style={{"display":"flex"}}>
                     <Input>
-                        <label for="nama">Nama</label>
-                        <input name="nama" style={inputStyle} value={data.nama} id="nama" onChange={handleChange}/>
+                        <label for="namaDepan">Nama depan</label>
+                        <input name="namaDepan" style={inputStyle} value={data.namaDepan} id="namaDepan" onChange={handleChange}/>
                     </Input>
                     <Input>
-                     <label for="no.telp">no.telp</label>
-                     <input name="nomor_telp" style={inputStyle} type={"text"} value={data.nomor_telp} id="alamat" onChange={handleChange}/>
+                        <label for="namaBelakang">Nama belakang</label>
+                        <input name="namaBelakang" style={inputStyle} value={data.namaBelakang} id="namaBelakang" onChange={handleChange}/>
+                    </Input>
+                    </div>
+                    <Input>
+                     <label for="no_telp">no.telp</label>
+                     <input name="no_telp" style={inputStyle} type={"text"} value={data.no_telp} id="no_telp" onChange={handleChange}/>
                     </Input>
                     <Input>
                      <label for="alamat">Alamat</label>

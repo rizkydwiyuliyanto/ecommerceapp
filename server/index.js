@@ -5,7 +5,8 @@ const mysql = require("mysql");
 const Joi = require("joi");
 const bodyParser = require("body-parser");
 const multer = require("multer");
-const path = require('path')
+const path = require('path');
+const { send } = require("process");
 
 const message = (str) => {
   const insert = (arr, index, newItem) => [
@@ -144,6 +145,35 @@ app.post("/inputBarang",upload.single("gambar"), (req, res) => {
     }
   );
 });
+
+app.post("/api/pesan/:idBarang", (req, res) => {
+  const schema = Joi.object({
+    namaDepan: Joi.string().required(),
+    namaBelakang: Joi.string().required(),
+    no_telp : Joi.string().required(),
+    alamat :Joi.string().required(),
+    catatan : Joi.string().required()
+  })
+  let result = schema.validate(req.body);
+  if (result.error) {
+    res.status(400).send(result.error.details[0].path[0] + " tidak boleh kosong")
+    return;
+  };
+  const namaDepan = req.body.namaDepan;
+  const namaBelakang = req.body.namaBelakang;
+  const no_telp = req.body.no_telp;
+  const alamat = req.body.alamat;
+  const catatan = req.body.catatan;
+  const idBarang = req.params.idBarang
+  let sqlQuery = "INSERT INTO `pesan` (`id_pesan`,`nama_depan`, `nama_belakang`, `alamat`, `catatan`, `no_telp`, `id_barang`) VALUES ('', ?, ?, ?, ?, ?, ?) "
+  db.query(sqlQuery, [namaDepan, namaBelakang, alamat, catatan, no_telp,idBarang],(err, result) => {
+    if (err){
+      console.log(err)
+    }else{
+      res.send(result)
+    }
+  })
+})
 
 app.delete("api/delete/:id", (req, res) => {
   let id = req.params.id;

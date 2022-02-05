@@ -4,6 +4,7 @@ import Styled from "styled-components";
 import AdminContent from "../components/Admincontent";
 import Profile from "../components/Profile";
 
+
 const Transaksiadmin = () => {
   return (
     <>
@@ -14,6 +15,7 @@ const Transaksiadmin = () => {
           <h2>Transaksi</h2>
           <Profile/>
       </div>
+
       </AdminContent>
       </div>
     </>

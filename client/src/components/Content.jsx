@@ -15,6 +15,7 @@ import Loading from "./Loading";
 const Content = (props) => {
   const [count, setCount] = useState(1);
   const [data, setData] = useState([]);
+  const [barang, setBarang] = useState();
   const [loading, setLoading] = useState(true);
   let Ref = useRef([]);
 
@@ -26,6 +27,7 @@ const Content = (props) => {
       getData();
       console.log(data)
     }
+    console.log(barang)
     for (let i = 0; i < items.length; i++) {
       if (Ref.current[i].accessKey == count) {
         Ref.current[i].className = "active";
@@ -103,7 +105,7 @@ const Content = (props) => {
                   >
                     <img style={{"objectFit":"contain"}} src={x.picture} width={"50px"} height={"50px"} />
                     <a>{x.nama_barang}</a>
-                    <a>Rp.12000</a>
+                    {/* <a>Rp.12000</a> */}
                   </div>
                 );
               })}
@@ -132,7 +134,8 @@ const Content = (props) => {
                   Rp.{x.harga_barang}
                 </a>
                 <Button onClick={() => {
-                   props.SetForm(!props.Form)
+                   props.SetForm();
+                   props.SetBarang(x.id_barang)
                 }}>
                   <img src={"whatsapp2.png"} width={"15px"} />
                   <a
@@ -228,8 +231,8 @@ const Desc = Styled.div`
     align-self: center;
     padding: 1em;
     border-radius: 5px;
-    width: 50%;
-    justify-content: center;
+    width: 45%;
+    justify-ontent: center;
     a {
       margin: 0.2em 0;
     }
