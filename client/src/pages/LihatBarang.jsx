@@ -31,6 +31,15 @@ const Barangadmin = () => {
           setData(data);
       }
   }
+  const deleteData = async(id) => {
+    let status = await Axios.delete(`http://localhost:3005/api/delete/${id}`).then((res) => {
+      return res.status
+    });
+    if (status == 200) {
+      alert("data berhasil dihapus");
+      getData();
+    }
+  }
 
   let items = [
     {
@@ -65,20 +74,33 @@ const Barangadmin = () => {
           <tr style={{"borderBottom":"1px solid black","margin":"1em","height":"40px"}}>
               <th>#</th>
               <th>Nama barang</th>
+              <th>Id barang</th>
               <th>Stok Barang</th>
               <th>Deskripsi barang</th>
               <th>Harga</th>
+              <th>Aksi</th>
           </tr>
           {data.map((x, idx) => {
               return (
-                  <tr style={{"height":"40px"}}>
-                      <td>{idx}</td>
-                      <td>{x.nama_barang}</td>
-                      <td>{x.stok_barang}</td>
-                      <td>{x.deskripsi_barnag}</td>
-                      <td>{x.harga_barang}</td>
-                  </tr>
-              )
+                <tr style={{ height: "40px" }}>
+                  <td>{idx+1}</td>
+                  <td>{x.nama_barang}</td>
+                  <td>{x.id_barang}</td>
+                  <td>{x.stok_barang}</td>
+                  <td>{x.deskripsi_barang}</td>
+                  <td>{x.harga_barang}</td>
+                  <td>
+                    <a>
+                      <button onClick={() => {
+                        deleteData(x.id_barang)
+                      }}>Hapus</button>
+                    </a>
+                    <a>
+                      <button>Update</button>
+                    </a>
+                  </td>
+                </tr>
+              );
           })}
         </Table>
      {/* <div style={{"display":"flex","justifyContent":"space-between","width":"90%","marginTop":"3em"}}>

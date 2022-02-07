@@ -120,7 +120,7 @@ const Content = (props) => {
           return (
             <Child >
               <Image>
-                <img src={x.gambar_barang} width={"320px"} />
+                <img src={x.gambar_barang} width={"250px"} />
               </Image>
               <Desc data-aos="fade-right">
                 <h2
@@ -232,6 +232,7 @@ const Desc = Styled.div`
     padding: 1em;
     border-radius: 5px;
     width: 45%;
+    height:50%;
     justify-ontent: center;
     a {
       margin: 0.2em 0;

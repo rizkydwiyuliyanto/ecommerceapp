@@ -9,7 +9,7 @@ import Barangadmin from './pages/Barangadmin';
 import { useState } from 'react';
 import InputBarang from './pages/InputBarang';
 import LihatBarang from './pages/LihatBarang';
-
+import DetailTransaksi from './pages/DetailTransaksi';
  
  
 
@@ -33,6 +33,9 @@ function App() {
             }}/>}/>
             <Route path="/admin/inputbarang" element={<InputBarang/>}/>
             <Route path="/admin/lihatbarang"element={<LihatBarang/>}/>
+            <Route path="/admin/transaksi/detail" element={<DetailTransaksi/>}>
+               <Route path=":id_barang" element={<DetailTransaksi/>}/>
+            </Route>
          </Routes>
       </BrowserRouter>
   );

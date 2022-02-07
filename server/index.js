@@ -77,6 +77,41 @@ app.get("/api/barang", (req, res) => {
   }))
 })
 
+app.get("/api/transaksi", (req, res) => {
+  let sqlQuery = "SELECT transaksi.id_transaksi, pesan.nama_depan, pesan.nama_belakang,pesan.alamat, pesan.catatan, pesan.no_telp, barang.nama_barang FROM transaksi INNER JOIN pesan on transaksi.id_pesan = pesan.id_pesan JOIN barang ON barang.id_barang = pesan.id_barang; ";
+  db.query(sqlQuery, (err, result) => {
+    if (err){
+      console.log(err);
+    }else{
+      res.send(result);
+    }
+  })
+})
+
+app.get("/api/transaksi/:id_transaksi", (req, res) => {
+  let id = req.params.id_transaksi;
+  let sqlQuery = `SELECT transaksi.id_transaksi, pesan.nama_depan, pesan.nama_belakang,pesan.alamat, pesan.catatan, pesan.no_telp, barang.nama_barang FROM transaksi INNER JOIN pesan on transaksi.id_pesan = pesan.id_pesan JOIN barang ON barang.id_barang = pesan.id_barang WHERE id_transaksi = ${id}`;
+  db.query(sqlQuery, (err, result) => {
+    if (err){
+      console.log(err);
+    }else{
+      res.send(result);
+    }
+  })
+})
+
+app.delete("/api/delete/:id_barang", (req, res) => {
+   let id = req.params.id_barang;
+   let query = `DELETE FROM barang WHERE barang.id_barang = ${id}`
+   db.query(query, (err, result) => {
+     if (err) {
+       console.log(err)
+     }else{
+       res.send(result);
+     }
+   })
+}) 
+
 app.post("/login", (req, res) => {
   const schema = Joi.object({
     username: Joi.required(),
