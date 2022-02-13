@@ -78,19 +78,23 @@ const Content = (props) => {
   };
   return (
     <>
-   
       <Parent>
         <Child>
           <Banner>
             {/* <img style={{"borderRadius":"10px"}} src={"6007b74724c75.jpg"}/> */}
+            <h1 style={{ color: "#5E9B26" }}>Selamat datang di website kami</h1>
+            <br />
+            <br />
             <h2>Pupuk organik</h2>
             <a>Dari limbah sampah organik yang diolah menjadi pupuk</a>
           </Banner>
           <Image>
             <div style={{ height: "400px", border: "unset" }}>
-
-                <img style={{"objectFit":"contain"}} src={image.picture} width={"310px"} />
-              
+              <img
+                style={{ objectFit: "contain" }}
+                src={image.picture}
+                width={"310px"}
+              />
             </div>
 
             <Product>
@@ -103,7 +107,12 @@ const Content = (props) => {
                       setCount(x.id);
                     }}
                   >
-                    <img style={{"objectFit":"contain"}} src={x.picture} width={"50px"} height={"50px"} />
+                    <img
+                      style={{ objectFit: "contain" }}
+                      src={x.picture}
+                      width={"50px"}
+                      height={"50px"}
+                    />
                     <a>{x.nama_barang}</a>
                     {/* <a>Rp.12000</a> */}
                   </div>
@@ -112,13 +121,34 @@ const Content = (props) => {
             </Product>
           </Image>
         </Child>
-        <div style={{"marginTop":"1.5em","width":"100%","height":"250px", "position":"relative", "display":"flex","justifyContent":"center","alignItems":"center"}}>
-            <img style={{"objectFit":"cover","borderRadius":"10px","position":"absolute","zIndex":"-2"}} src={"6007b74724c75.jpg"} width={"100%"} height={"100%"}/>
-            <h2 style={{"color":"white","fontWeight":"bold"}}>Produk Kami</h2>
-       </div>
+
+        <div
+          style={{
+            marginTop: "1.5em",
+            width: "100%",
+            height: "250px",
+            position: "relative",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <img
+            style={{
+              objectFit: "cover",
+              borderRadius: "10px",
+              position: "absolute",
+              zIndex: "-2",
+            }}
+            src={"6007b74724c75.jpg"}
+            width={"100%"}
+            height={"100%"}
+          />
+          <h2 style={{ color: "white", fontWeight: "bold" }}>Produk Kami</h2>
+        </div>
         {data.map((x) => {
           return (
-            <Child >
+            <Child>
               <Image>
                 <img src={x.gambar_barang} width={"250px"} />
               </Image>
@@ -133,25 +163,36 @@ const Content = (props) => {
                 <a style={{ fontSize: "1.2rem", color: "#5B5B5B" }}>
                   Rp.{x.harga_barang}
                 </a>
-                <Button onClick={() => {
-                   props.SetForm();
-                   props.SetBarang(x.id_barang)
-                }}>
-                  <img src={"whatsapp2.png"} width={"15px"} />
-                  <a
-                    style={{
-                      position: "relative",
-                      top: "-2px",
+                <div>
+                  <Button
+                    onClick={() => {
+                      props.SetForm();
+                      props.SetBarang(x.id_barang);
                     }}
                   >
-                    {" "}
-                    Beli sekarang
-                  </a>
-                </Button>
+                    <img src={"whatsapp2.png"} width={"15px"} />
+                    <a
+                      style={{
+                        position: "relative",
+                        top: "-2px",
+                      }}
+                    >
+                      {" "}
+                      Beli sekarang
+                    </a>
+                  </Button>
+                  <a>stok</a>
+                </div>
                 <a style={{ color: "#5E9B26", fontWeight: "bold" }}>
                   Deskripsi
                 </a>
-                <a style={{"border":"unset", "height":"100px","overflow-y":"scroll"}}>
+                <a
+                  style={{
+                    border: "unset",
+                    height: "100px",
+                    "overflow-y": "scroll",
+                  }}
+                >
                   {x.deskripsi_barang}
                 </a>
               </Desc>
@@ -176,6 +217,12 @@ const Child = Styled.div`
    
     width: 100%;
 `;
+
+const Ingredient = Styled.div `
+  display: block;
+  text-align: center;
+`
+
 const Banner = Styled.div`
     display: flex;
     width: 50%;

@@ -9,7 +9,13 @@ import { Link } from 'react-router-dom';
 
 const Transaksiadmin = () => {
   const [data, setData] = useState();
+  const [popUp, setPopUp] = useState(false);
+  const [id, setId] = useState();
   const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    getData()
+    console.log(data)
+  }, [JSON.stringify(data)])
   const getData = async () => {
         let status = await Axios.get("http://localhost:3005/api/transaksi").then((res) => {
           return res.status
@@ -22,14 +28,21 @@ const Transaksiadmin = () => {
           setLoading(false)
         }
   } 
-  useEffect(() => {
-    getData()
-    console.log(data)
-  }, JSON.stringify(data))
+
+  const deleteData = async(id) => {
+    let status = await Axios.delete(`http://localhost:3005/api/pesan/${id}`).then((res) => {
+      return res.status
+    });
+    if (status == 200) {
+      setPopUp(!popUp)
+      alert("data berhasil dihapus");
+      getData();
+    }
+  }
   return (
     <>
       <Navbaradmin />
-      <div style={{ position: "relative", width: "100%" }}>
+      <div >
       <AdminContent>
       <div style={{"display":"flex","justifyContent":"space-between"}}>
           <h2>Transaksi</h2>
@@ -53,13 +66,29 @@ const Transaksiadmin = () => {
               <td>{x.nama_depan}</td>
               <td>{x.nama_belakang}</td>
               <td>{x.no_telp}</td>
-              <td>{x.alamat}</td>
+              <td>
+                {x.alamat.length > 5
+                  ? x.alamat.substring(0, 10) + "..."
+                  : x.alamat}
+              </td>
               <td>{x.nama_barang}</td>
               <td>{x.catatan}</td>
               <td>
                 <a>
                   <button>
-                    <Link to={`/admin/transaksi/detail/${x.id_transaksi}`}>
+                    <a
+                      onClick={() => {
+                        setId(x.id_pesan);
+                        setPopUp(!popUp);
+                      }}
+                    >
+                      Hapus
+                    </a>
+                  </button>
+                </a>
+                <a>
+                  <button>
+                    <Link to={`/admin/transaksi/detail/${x.id_pesan}`}>
                       Detail
                     </Link>
                   </button>
@@ -72,6 +101,29 @@ const Transaksiadmin = () => {
        
       </div>
       </AdminContent>
+      {popUp ? (
+        <div className="popup" id="popup-1">
+          <div className="overlay" onClick={() => {
+            setPopUp(!popUp)
+          }}></div>
+          <div className="content">
+            <div className="close-btn">
+              <a onClick={() => {setPopUp(!popUp)}}>X</a>
+            </div>
+            <h1 style={{"height":"50px"}}>Hapus transaksi ?</h1>
+            <div className="option">
+              <a onClick={() => {
+                deleteData(id)
+              }}>Ya</a>
+              <a onClick = {() => {
+                setPopUp(!popUp)
+              }}>Tidak</a>
+            </div>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
       </div>
     </>
   );

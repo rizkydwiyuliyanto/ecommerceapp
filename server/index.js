@@ -77,8 +77,20 @@ app.get("/api/barang", (req, res) => {
   }))
 })
 
+app.get("/api/barang/:id_barang", (req, res) => {
+  let id = req.params.id_barang;
+  let sqlQuery = "SELECT * FROM barang WHERE id_barang = ?";
+  db.query(sqlQuery, id, (err, result) => {
+    if (err) {
+      console.log(err)
+    }else{
+      res.send(result)
+    }
+  })
+})
+
 app.get("/api/transaksi", (req, res) => {
-  let sqlQuery = "SELECT transaksi.id_transaksi, pesan.nama_depan, pesan.nama_belakang,pesan.alamat, pesan.catatan, pesan.no_telp, barang.nama_barang FROM transaksi INNER JOIN pesan on transaksi.id_pesan = pesan.id_pesan JOIN barang ON barang.id_barang = pesan.id_barang; ";
+  let sqlQuery = "SELECT pesan.id_pesan, pesan.nama_depan, pesan.nama_belakang,alamat, catatan,no_telp, barang.nama_barang FROM pesan INNER JOIN barang on pesan.id_barang = barang.id_barang";
   db.query(sqlQuery, (err, result) => {
     if (err){
       console.log(err);
@@ -88,9 +100,9 @@ app.get("/api/transaksi", (req, res) => {
   })
 })
 
-app.get("/api/transaksi/:id_transaksi", (req, res) => {
-  let id = req.params.id_transaksi;
-  let sqlQuery = `SELECT transaksi.id_transaksi, pesan.nama_depan, pesan.nama_belakang,pesan.alamat, pesan.catatan, pesan.no_telp, barang.nama_barang FROM transaksi INNER JOIN pesan on transaksi.id_pesan = pesan.id_pesan JOIN barang ON barang.id_barang = pesan.id_barang WHERE id_transaksi = ${id}`;
+app.get("/api/transaksi/:id_pesan", (req, res) => {
+  let id = req.params.id_pesan;
+  let sqlQuery = `SELECT pesan.id_pesan, pesan.nama_depan, pesan.nama_belakang,pesan.alamat, pesan.catatan, pesan.no_telp, barang.nama_barang FROM pesan INNER JOIN barang on pesan.id_barang = barang.id_barang WHERE id_pesan = ${id}`;
   db.query(sqlQuery, (err, result) => {
     if (err){
       console.log(err);
@@ -110,6 +122,18 @@ app.delete("/api/delete/:id_barang", (req, res) => {
        res.send(result);
      }
    })
+}) 
+
+app.delete("/api/pesan/:id_pesan", (req, res) => {
+  let id = req.params.id_pesan;
+  let query = `DELETE FROM pesan WHERE id_pesan = ${id}`
+  db.query(query, (err, result) => {
+    if (err) {
+      console.log(err)
+    }else{
+      res.send(result);
+    }
+  })
 }) 
 
 app.post("/login", (req, res) => {

@@ -39,15 +39,15 @@ const Navbaradmin = () => {
       </Logo>
       <NavbarChild>
         <a>
-         <img style={{"marginRight":"0.5em"}} src={"/transaction.png"} width={"30px"} height={"25px"}/>
+         <img style={{"marginRight":"0.9em"}} src={"/transaction.png"} width={"30px"} height={"25px"}/>
          <Link style={{textDecoration:"none"}} to="/admin/transaksi">Transaksi</Link>
         </a>
         <a>
-          <img style={{"marginRight":"0.5em"}} src={"/menu.png"} width={"30px"} height={"25px"}/>
+          <img style={{"marginRight":"0.9em"}} src={"/input.png"} width={"30px"} height={"25px"}/>
           <Link style={{textDecoration:"none"}} to ="/admin/inputbarang">Input barang</Link>
         </a>
         <a>
-          <img style={{"marginRight":"0.5em"}} src={"/menu.png"} width={"30px"} height={"25px"}/>
+          <img style={{"marginRight":"0.9em"}} src={"/menu.png"} width={"30px"} height={"25px"}/>
           <Link style={{textDecoration:"none"}} to ="/admin/lihatbarang">Lihat barang</Link>
         </a>
       </NavbarChild>

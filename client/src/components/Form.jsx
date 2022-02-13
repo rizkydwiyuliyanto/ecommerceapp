@@ -75,6 +75,7 @@ const Form = (props) => {
     return (
      <>
         {!props.Form?"":
+        <>
         <FormParent>
          <div style={{"backgroundColor":"#f4f4f4","width":"45%","boxShadow":"0px 0px 4px 0px black","padding":"2em 2em 1em 2em", "borderRadius":"5px"}}>
          <div style={{"display":"flex","justifyContent":"space-between"}}>
@@ -116,7 +117,9 @@ const Form = (props) => {
                     
                  </form>
          </div>
-        </FormParent>}
+        </FormParent>
+        </>
+        }
      </>
     )
 }

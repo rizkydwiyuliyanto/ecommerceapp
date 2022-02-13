@@ -2,8 +2,6 @@ import react from "react";
 import { useState,useEffect } from 'react';
 import Axios from 'axios';
 
-
-
 const Profile = () => {
     const [profile, setProfile] = useState([]);
     const [loading, setLoading] = useState(true);
