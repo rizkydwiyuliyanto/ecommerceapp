@@ -89,7 +89,7 @@ const Barangadmin = () => {
                 <td>{x.nama_barang}</td>
                 <td>{x.id_barang}</td>
                 <td>{x.stok_barang}</td>
-                <td>{x.deskripsi_barang}</td>
+                <td>{x.deskripsi_barang.length > 15?x.deskripsi_barang.substring(0, 15)+"...":x.deskripsi_barang}</td>
                 <td>{x.harga_barang}</td>
                 <td>
                   <a>
@@ -140,7 +140,7 @@ const Barangadmin = () => {
           ></div>
           <div
             style={{
-              border: "15px solid black",
+              border: "unset",
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
@@ -222,36 +222,80 @@ const Barangadmin = () => {
 };
 
 const Form = (props) => {
-  const handleSubmit = () => {
+  let initialState = {
+    "id_barang": "",
+    "nama_barang": "",
+    "deskripsi_barang": "",
+    "harga_barang": "",
+    "stok_barang": "",
+    "kategori_barang": "",
+    "gambar_barang": ""
+  }
+
+  const [data, setData] = useState(initialState)
+  const handleSubmit = (e) => {
     console.log("test")
+    e.preventDefault();
+  }
+  useEffect(()=> {
+    let initialState = {
+      "id_barang":props.Data[0].id_barang,
+      "nama_barang": props.Data[0].nama_barang,
+      "deskripsi_barang": props.Data[0].deskripsi_barang,
+      "harga_barang": props.Data[0].harga_barang,
+      "stok_barang": props.Data[0].stok_barang,
+      "kategori_barang": "",
+      "gambar_barang": ""
+    }
+    setData(initialState)
+    console.log("test")
+  },[JSON.stringify(props.Data)])
+  const handleChange=(e) => {
+    setData({
+      ...data,
+      [e.target.id] : e.target.value 
+  })
+  }
+  const updateData = async(id) => {
+    let status = await Axios.put(`http://localhost:3005/api/update/${id}`, {
+      "nama_barang": data.nama_barang,
+      "deskripsi_barang": data.deskripsi_barang,
+      "harga_barang": data.harga_barang,
+      "stok_barang": data.stok_barang,
+    }).then((res) => {
+      return res.status
+    });
+    if (status == 200) {
+      alert("Update berhasil")
+    }
   }
   return (
     <>
       <FormParent>
         <form style={{ border: "unset" ,"height":"100%","width":"90%"}} onSubmit={handleSubmit}>
-           
-
           <Input>
             <label for={"namaBarang"}>Nama barang</label>
-            <input value = {props.Data[0].nama_barang} id={"namaBarang"} type={"text"} />
+            <input value = {data.nama_barang} id={"nama_barang"} type={"text"} onChange={handleChange}/>
           </Input>
           <Input>
             <label for={"idBarang"}>Id barang</label>
-            <input value = {props.Data[0].id_barang} id={"idBarang"} type={"text"} />
+            <input value = {data.id_barang} id={"id_barang"} type={"text"} onChange={handleChange}/>
           </Input>
           <Input>
             <label for={"stokBarang"}>Stok barnag</label>
-            <input value = {props.Data[0].stok_barang} id={"stokBarang"} type={"text"} />
+            <input value = {data.stok_barang} id={"stok_barang"} type={"text"} onChange={handleChange}/>
           </Input>
           <Input>
             <label for={"deskripsiBarang"}>Deskripsi barang</label>
-            <textarea value = {props.Data[0].deskripsi_barang} id={"deskripsiBarang"} type={"text"} />
+            <textarea value = {data.deskripsi_barang} id={"deskripsi_barang"} type={"text"} onChange={handleChange}/>
           </Input>
           <Input>
             <label for={"hargaBarang"}>Harga barang</label>
-            <input value = {props.Data[0].harga_barang} id={"hargaBarang"} type={"text"} />
+            <input value = {data.harga_barang} id={"harga_barang"} type={"text"} onChange={handleChange}/>
           </Input>
-          <button>Submit</button>
+          <button onClick={() => {
+            updateData(data.id_barang); 
+          }}>Submit</button>
         </form>
       </FormParent>
     </>

@@ -57,6 +57,7 @@ const Transaksiadmin = () => {
             <th>No telpon</th>
             <th>Alamat</th>
             <th>Nama barang</th>
+            <th>Jumlah</th>
             <th>Catatan</th>
             <th>Aksi</th>
           </tr>
@@ -72,6 +73,7 @@ const Transaksiadmin = () => {
                   : x.alamat}
               </td>
               <td>{x.nama_barang}</td>
+              <td>{x.jumlah}</td>
               <td>{x.catatan}</td>
               <td>
                 <a>
@@ -103,24 +105,52 @@ const Transaksiadmin = () => {
       </AdminContent>
       {popUp ? (
         <div className="popup" id="popup-1">
-          <div className="overlay" onClick={() => {
-            setPopUp(!popUp)
-          }}></div>
+        <div
+          className="overlay"
+          onClick={() => {
+            setPopUp(!popUp);
+          }}
+        ></div>
+        <div
+          style={{
+            border: "unset",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            width: "100%",
+            height: "100vh",
+          }}
+        >
           <div className="content">
-            <div className="close-btn">
-              <a onClick={() => {setPopUp(!popUp)}}>X</a>
+            <div class="close-btn">
+              <a
+                onClick={() => {
+                  setPopUp(!popUp);
+                }}
+              >
+                X
+              </a>
             </div>
-            <h1 style={{"height":"50px"}}>Hapus transaksi ?</h1>
+            <h1 style={{ height: "50px" }}>Hapus barang ?</h1>
             <div className="option">
-              <a onClick={() => {
-                deleteData(id)
-              }}>Ya</a>
-              <a onClick = {() => {
-                setPopUp(!popUp)
-              }}>Tidak</a>
+              <a
+                onClick={() => {
+                  deleteData(id);
+                }}
+              >
+                Ya
+              </a>
+              <a
+                onClick={() => {
+                  setPopUp(!popUp);
+                }}
+              >
+                Tidak
+              </a>
             </div>
           </div>
         </div>
+      </div>
       ) : (
         ""
       )}

@@ -11,11 +11,22 @@ const Main = () => {
   const [loading, setLoading] = useState(true);
   const [form, setForm] = useState(false);
   const [barang, setBarang] = useState();
+  const [jumlah, setJumlah] = useState(1);
+
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
     }, 500);
   }, [loading]);
+
+  const counter = (n) => {
+    if (jumlah == 0){
+      setJumlah(1)
+      console.log(jumlah)
+    }else{
+      setJumlah(prev => prev + (n))
+    }
+ }
 
   return (
     <>
@@ -26,6 +37,7 @@ const Main = () => {
         <>
           <Form
             Form={form}
+            Jumlah = {jumlah}
             SetForm={() => {
               setForm(!form);
             }}
@@ -34,6 +46,10 @@ const Main = () => {
           <Container>
             <Content
               Form={form}
+              Jumlah = {jumlah}
+              Counter = {(n) => {
+                counter(n)
+              }}
               SetForm={() => {
                 setForm(!form);
               }}

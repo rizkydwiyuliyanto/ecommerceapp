@@ -90,7 +90,7 @@ app.get("/api/barang/:id_barang", (req, res) => {
 })
 
 app.get("/api/transaksi", (req, res) => {
-  let sqlQuery = "SELECT pesan.id_pesan, pesan.nama_depan, pesan.nama_belakang,alamat, catatan,no_telp, barang.nama_barang FROM pesan INNER JOIN barang on pesan.id_barang = barang.id_barang";
+  let sqlQuery = "SELECT pesan.id_pesan, pesan.jumlah, pesan.nama_depan, pesan.nama_belakang,alamat, catatan,no_telp, barang.nama_barang FROM pesan INNER JOIN barang on pesan.id_barang = barang.id_barang";
   db.query(sqlQuery, (err, result) => {
     if (err){
       console.log(err);
@@ -135,6 +135,25 @@ app.delete("/api/pesan/:id_pesan", (req, res) => {
     }
   })
 }) 
+
+app.put("/api/update/:id_barang", (req, res) => {
+  let id = req.params.id_barang;
+  let namaBarang = req.body.nama_barang;
+  let deskripsiBarang = req.body.deskripsi_barang;
+  let hargaBarang = req.body.harga_barang;
+  let stokBarang = req.body.stok_barang;
+  let kategoriBarang = req.body.kategori_barang;
+  let gambarBarang = req.body.gambar_barang;
+
+  let query  = `UPDATE barang SET nama_barang = ?, deskripsi_barang = ?, harga_barang = ?, stok_barang = ?, kategori_barang = ? WHERE barang.id_barang = ${id} `
+  db.query(query, [namaBarang, deskripsiBarang, hargaBarang, stokBarang, kategoriBarang], (err, result) => {
+    if (err){
+      console.log(err)
+    }else{
+      res.send(result)
+    }
+  })
+})
 
 app.post("/login", (req, res) => {
   const schema = Joi.object({
@@ -211,7 +230,8 @@ app.post("/api/pesan/:idBarang", (req, res) => {
     namaBelakang: Joi.string().required(),
     no_telp : Joi.string().required(),
     alamat :Joi.string().required(),
-    catatan : Joi.string().required()
+    catatan : Joi.string().required(),
+    jumlah : Joi.number().required()
   })
   let result = schema.validate(req.body);
   if (result.error) {
@@ -223,9 +243,10 @@ app.post("/api/pesan/:idBarang", (req, res) => {
   const no_telp = req.body.no_telp;
   const alamat = req.body.alamat;
   const catatan = req.body.catatan;
-  const idBarang = req.params.idBarang
-  let sqlQuery = "INSERT INTO `pesan` (`id_pesan`,`nama_depan`, `nama_belakang`, `alamat`, `catatan`, `no_telp`, `id_barang`) VALUES ('', ?, ?, ?, ?, ?, ?) "
-  db.query(sqlQuery, [namaDepan, namaBelakang, alamat, catatan, no_telp,idBarang],(err, result) => {
+  const idBarang = req.params.idBarang;
+  const jumlah = req.body.jumlah
+  let sqlQuery = "INSERT INTO `pesan` (`id_pesan`,`jumlah`,`nama_depan`, `nama_belakang`, `alamat`, `catatan`, `no_telp`, `id_barang`) VALUES ('',?, ?, ?, ?, ?, ?, ?) "
+  db.query(sqlQuery, [jumlah, namaDepan, namaBelakang, alamat, catatan, no_telp,idBarang],(err, result) => {
     if (err){
       console.log(err)
     }else{

@@ -15,9 +15,12 @@ import Loading from "./Loading";
 const Content = (props) => {
   const [count, setCount] = useState(1);
   const [data, setData] = useState([]);
+  const [jumlah, setJumlah] = useState(1);
   const [barang, setBarang] = useState();
   const [loading, setLoading] = useState(true);
+  const [isHover, setIsHover] = useState(false);
   let Ref = useRef([]);
+  let countRef = useRef();
 
   useEffect(() => {
     AOS.init({
@@ -76,6 +79,16 @@ const Content = (props) => {
     slidesToShow: 1,
     slidesToScroll: 1
   };
+
+  const handleHover = ()=> {
+    setIsHover(!isHover);
+}
+  var linkStyle;
+  if (isHover){
+      linkStyle = { cursor: "pointer", padding: "0.2em", color: "#44CB77" };
+  }else {
+      linkStyle = {cursor: "default", padding: "0.2em", color: "#44CB77" }
+  }
   return (
     <>
       <Parent>
@@ -148,55 +161,98 @@ const Content = (props) => {
         </div>
         {data.map((x) => {
           return (
+            <>
+            
             <Child>
               <Image>
                 <img src={x.gambar_barang} width={"250px"} />
               </Image>
               <Desc data-aos="fade-right">
-                <h2
+                <h1
                   style={{
                     marginBottom: "0.25em",
                   }}
                 >
                   {x.nama_barang}
-                </h2>
+                </h1>
                 <a style={{ fontSize: "1.2rem", color: "#5B5B5B" }}>
                   Rp.{x.harga_barang}
                 </a>
                 <div>
-                  <Button
-                    onClick={() => {
-                      props.SetForm();
-                      props.SetBarang(x.id_barang);
-                    }}
-                  >
-                    <img src={"whatsapp2.png"} width={"15px"} />
-                    <a
+                <a style={{"position":"relative","top":"25px"}}>Stok</a>
+                  <div style={{"display":"flex","justifyContent":"space-between","alignItems":"center", "width":"300px","border":"unset"}}>
+                    <div
                       style={{
-                        position: "relative",
-                        top: "-2px",
+                        display: "flex",
+                        border: "1.5px solid grey",
+                        borderRadius:"5px",
+                        width: "35%",
+                        textAlign: "center",
+                        alignItems:"center",
+                        padding:"0 0.15em"
                       }}
                     >
-                      {" "}
-                      Beli sekarang
-                    </a>
-                  </Button>
-                  <a>stok</a>
+                      <a
+                        ref={countRef}
+                        style={linkStyle}
+                        onClick={() => {
+                          props.Counter(-1)
+                        }}
+                      >
+                        <img style={{"position":"relative","left":"2.8px"}} src="/minus2.png" width={"10px"} height={"10px"}/>
+                      </a>
+                      <a style={{ width: "60%", border: "unset" }}>{props.Jumlah}</a>
+                      <a
+                        style={linkStyle}
+                        onClick={() => {
+                          props.Counter(1)
+                        }}
+                      >
+                        <img src="/plus.png" width={"10px"} height={"10px"}/>
+                      </a>
+                    </div>
+                    <Button
+                      onClick={() => {
+                        props.SetForm();
+                        props.SetBarang(x.id_barang);
+                      }}
+                    >
+                      <img style={{
+                           position: "relative",
+                           top: "2px",
+                          // fontSize:"1rem"
+                        }} src={"whatsapp2.png"} width={"15px"} />
+                      <a
+                        style={{
+                          position: "relative",
+                         
+                          // fontSize:"1rem"
+                        }}
+                      >
+                        {" "}
+                        Beli sekarang
+                      </a>
+                    </Button>
+                  </div>
+               
                 </div>
-                <a style={{ color: "#5E9B26", fontWeight: "bold" }}>
+                <a style={{ "borderTop":"1.5px solid grey","paddingTop":"0.9em",color: "#5E9B26", fontWeight: "bold" }}>
                   Deskripsi
                 </a>
                 <a
                   style={{
-                    border: "unset",
-                    height: "100px",
+                    borderTop: "unset",
+                    height: "150px",
                     "overflow-y": "scroll",
+                    lineHeight:"25px"
                   }}
                 >
                   {x.deskripsi_barang}
                 </a>
               </Desc>
             </Child>
+            
+            </>
           );
         })}
       </Parent>
@@ -279,7 +335,7 @@ const Desc = Styled.div`
     padding: 1em;
     border-radius: 5px;
     width: 45%;
-    height:50%;
+    height:auto;
     justify-ontent: center;
     a {
       margin: 0.2em 0;
@@ -293,6 +349,7 @@ width:150px;
 padding:1em 0;
 margin:2em 0;
 border-radius: 5px;
+width: 60%;
 :hover {
   cursor: pointer;
   background-color:#3cb66b;

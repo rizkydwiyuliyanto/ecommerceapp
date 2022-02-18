@@ -11,7 +11,8 @@ const Form = (props) => {
         "namaBelakang":"",
         "no_telp":"",
         "alamat" :"",
-        "catatan":""
+        "catatan":"",
+        "jumlah": 1
     }
     const [data, setData] = useState(initialState);
     const [isHover, setIsHover] = useState(false);
@@ -23,7 +24,8 @@ const Form = (props) => {
             namaBelakang : data.namaBelakang,
             no_telp : data.no_telp,
             alamat : data.alamat,
-            catatan : data.catatan
+            catatan : data.catatan,
+            jumlah: props.Jumlah
         }).then((res) => {
             return res.status
         }).catch((err) => {
