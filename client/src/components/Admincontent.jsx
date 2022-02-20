@@ -13,7 +13,7 @@ const Parent = Styled.div`
 width: 80%;
 border: unset;
 position: absolute;
-right: 0;
+right: 30px;
 margin-top: 1.60em;
    padding:0.60em 1em;
 `;

@@ -61,18 +61,14 @@ const Barangadmin = () => {
       <AdminContent>
         <div
           className="admin"
-          style={{ display: "flex", justifyContent: "space-between" }}
+          style={{ display: "flex", justifyContent: "space-between" ,"marginBottom":"2.5em"}}
         >
           <h2>Lihat barang</h2>
           <Profile />
         </div>
         <Table className="admin">
           <tr
-            style={{
-              borderBottom: "1px solid black",
-              margin: "1em",
-              height: "40px",
-            }}
+          style={{"backgroundColor":"#353049","margin":"0","color":"#F4F4F4"}}
           >
             <th>#</th>
             <th>Nama barang</th>
@@ -80,7 +76,8 @@ const Barangadmin = () => {
             <th>Stok Barang</th>
             <th>Deskripsi barang</th>
             <th>Harga</th>
-            <th>Aksi</th>
+            <th>Hapus</th>
+            <th>Update</th>
           </tr>
           {data.map((x, idx) => {
             return (
@@ -92,19 +89,15 @@ const Barangadmin = () => {
                 <td>{x.deskripsi_barang.length > 15?x.deskripsi_barang.substring(0, 15)+"...":x.deskripsi_barang}</td>
                 <td>{x.harga_barang}</td>
                 <td>
-                  <a>
-                    <button
-                      onClick={() => {
+                  <a onClick={() => {
                         setId(x.id_barang);
                         setPopUp(!popUp);
-                      }}
-                    >
-                      Hapus
-                    </button>
+                      }}>
+                       <img src={"/delete1.png"} width={"20px"} height={"20px"}/>
                   </a>
-                  <a>
-                    <button
-                      onClick={async () => {
+                </td>
+                <td>
+                <a onClick={async () => {
                         setPopUp2(!popUp2);
                         let status = await Axios.get(
                           `http://localhost:3005/api/barang/${x.id_barang}`
@@ -119,10 +112,11 @@ const Barangadmin = () => {
                           });
                           setSelectData(data);
                         }
-                      }}
-                    >
-                      Update
-                    </button>
+                      }}>
+                    
+               
+                      <img src={"/exchange.png"} width={"20px"} height={"20px"}/>
+                
                   </a>
                 </td>
               </tr>
@@ -327,20 +321,27 @@ const FormParent = Styled.div `
   
   
 `
-
 const Table = Styled.table `
-  width: 70%;
-  background-color: #F5F8FB;
-  padding: 0.5em;
-  tr {
-     
-      border: 1px solid black;
-      width: 100%;
-  }
-  th {
-      text-align: left;
-  }
+border-collapse: collapse;
+width: 100%;
+text-align: center;
+border-radius: 3px;
+overflow: hidden;
+th {
+  font-size: 0.75rem;
+  padding: 8px;
+}
+td {
+border-bottom : 1px solid #a0a0a0;
+ text-align: center;
+ padding: 8px;
+}
+//  tr:nth-child(odd) {
+//    background-color: #353049;
+//    color: white;
+//  }
 `
+
 const Card = Styled.div `
    display: flex;
    flex-direction: column;
@@ -350,4 +351,5 @@ const Card = Styled.div `
    border-radius: 10px;
    box-shadow: 0px 1px 2px 1px #b1b3b5;
 `
+
 export default Barangadmin;

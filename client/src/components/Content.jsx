@@ -26,16 +26,20 @@ const Content = (props) => {
     AOS.init({
       duration : 2200
     });
-    if (loading){
+    if (data.length == 0){
       getData();
+      setLoading(false)
       console.log(data)
     }
+ 
     console.log(barang)
-    for (let i = 0; i < items.length; i++) {
-      if (Ref.current[i].accessKey == count) {
-        Ref.current[i].className = "active";
-      } else {
-        Ref.current[i].className = "notActive";
+    if (data.length > 0){
+      for (let i = 0; i < items.length; i++) {
+        if (Ref.current[i].accessKey == count) {
+          Ref.current[i].className = "active";
+        } else {
+          Ref.current[i].className = "notActive";
+        }
       }
     }
   }, [count, JSON.stringify(data)]);
@@ -91,7 +95,10 @@ const Content = (props) => {
   }
   return (
     <>
-      <Parent>
+    {loading ? 
+    <Loading/>
+    :
+    <Parent>
         <Child>
           <Banner>
             {/* <img style={{"borderRadius":"10px"}} src={"6007b74724c75.jpg"}/> */}
@@ -179,12 +186,12 @@ const Content = (props) => {
                   Rp.{x.harga_barang}
                 </a>
                 <div>
-                <a style={{"position":"relative","top":"25px"}}>Stok</a>
+                <a style={{"position":"relative","top":"25px"}}>Stok: {x.stok_barang}</a>
                   <div style={{"display":"flex","justifyContent":"space-between","alignItems":"center", "width":"300px","border":"unset"}}>
                     <div
                       style={{
                         display: "flex",
-                        border: "1.5px solid grey",
+                        border: "unset",
                         borderRadius:"5px",
                         width: "35%",
                         textAlign: "center",
@@ -244,7 +251,8 @@ const Content = (props) => {
                     borderTop: "unset",
                     height: "150px",
                     "overflow-y": "scroll",
-                    lineHeight:"25px"
+                    lineHeight:"25px",
+                    paddingRight:"0.6em"
                   }}
                 >
                   {x.deskripsi_barang}
@@ -255,7 +263,8 @@ const Content = (props) => {
             </>
           );
         })}
-      </Parent>
+      </Parent>}
+      
     </>
   );
 };
@@ -263,7 +272,7 @@ const Content = (props) => {
 const Parent = Styled.div`
     display: block;
     width: 100%:
-    border: 1px solid black;
+  
  
 `;
 

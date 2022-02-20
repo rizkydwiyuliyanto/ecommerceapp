@@ -42,16 +42,16 @@ const Transaksiadmin = () => {
   return (
     <>
       <Navbaradmin />
-      <div >
+      <div  className="admin">
       <AdminContent>
-      <div style={{"display":"flex","justifyContent":"space-between"}}>
+      <div style={{"display":"flex","justifyContent":"space-between","marginBottom":"2.5em"}}>
           <h2>Transaksi</h2>
           <Profile/>
       </div>
       <div>
         {loading?<p>Loading...</p>: 
-        <table style={{"width":"80%","border":"unset","text-align":"left"}}>
-          <tr>
+        <Table>
+          <tr style={{"backgroundColor":"#353049","margin":"0","color":"#F4F4F4"}}>
             <th>Nama depan</th>
             <th>Nama belakang</th>
             <th>No telpon</th>
@@ -59,7 +59,9 @@ const Transaksiadmin = () => {
             <th>Nama barang</th>
             <th>Jumlah</th>
             <th>Catatan</th>
-            <th>Aksi</th>
+            <th>Status</th>
+            <th>Hapus</th>
+            <th>Detail</th>
           </tr>
         {data.map((x, idx) => {
           return (
@@ -74,32 +76,30 @@ const Transaksiadmin = () => {
               </td>
               <td>{x.nama_barang}</td>
               <td>{x.jumlah}</td>
-              <td>{x.catatan}</td>
+              <td>{x.catatan.length > 5 ? x.catatan.substring(0, 10) + "...": x.catatan}</td>
+              <td>Proses</td>
               <td>
-                <a>
-                  <button>
                     <a
                       onClick={() => {
                         setId(x.id_pesan);
                         setPopUp(!popUp);
                       }}
                     >
-                      Hapus
+                      <img style={{"cursor":"pointer"}} src={"/delete1.png"} width={"20px"} height={"20px"}/>
                     </a>
-                  </button>
-                </a>
-                <a>
-                  <button>
+
+              </td>
+              <td>
+              <a>
                     <Link to={`/admin/transaksi/detail/${x.id_pesan}`}>
-                      Detail
+                      <img src={"/document.png"} width={"20px"} height={"20px"}/>
                     </Link>
-                  </button>
                 </a>
               </td>
             </tr>
           );
         })}
-        </table>}
+        </Table>}
        
       </div>
       </AdminContent>
@@ -158,5 +158,24 @@ const Transaksiadmin = () => {
     </>
   );
 };
-
+const Table = Styled.table `
+   border-collapse: collapse;
+   width: 100%;
+   text-align: center;
+   border-radius: 3px;
+   overflow: hidden;
+   th {
+     font-size: 0.75rem;
+     padding: 8px;
+   }
+   td {
+   border-bottom : 1px solid #a0a0a0;
+    text-align: center;
+    padding: 8px;
+   }
+  //  tr:nth-child(odd) {
+  //    background-color: #353049;
+  //    color: white;
+  //  }
+`
 export default Transaksiadmin;

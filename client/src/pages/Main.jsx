@@ -13,11 +13,11 @@ const Main = () => {
   const [barang, setBarang] = useState();
   const [jumlah, setJumlah] = useState(1);
 
-  useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 500);
-  }, [loading]);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setLoading(false);
+  //   }, 500);
+  // }, [loading]);
 
   const counter = (n) => {
     if (jumlah == 0){
@@ -31,10 +31,7 @@ const Main = () => {
   return (
     <>
       <Navbar />
-      {loading ? (
-        <Loading />
-      ) : (
-        <>
+    
           <Form
             Form={form}
             Jumlah = {jumlah}
@@ -59,8 +56,6 @@ const Main = () => {
             />
           </Container>
           <Footer />
-        </>
-      )}
     </>
   );
 };
