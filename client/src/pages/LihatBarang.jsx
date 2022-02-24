@@ -204,7 +204,11 @@ const Barangadmin = () => {
                   X
                 </a>
               </div>
-              <Form Data={selectData} />
+              <Form ClosePopUp = {() => {
+                setPopUp2(!popUp2);
+              }} GetData = {()=> {
+                getData()
+              }}Data={selectData} />
             </div>
           </div>
         </div>
@@ -261,12 +265,13 @@ const Form = (props) => {
     });
     if (status == 200) {
       alert("Update berhasil")
+      props.GetData()
     }
   }
   return (
     <>
       <FormParent>
-        <form style={{ border: "unset" ,"height":"100%","width":"90%"}} onSubmit={handleSubmit}>
+        <form style={{ border: "unset" ,"height":"100%","width":"90%", "display":"flex","flexDirection":"column","height":"100%","justifyContent":"space-between","border":"unset"}} onSubmit={handleSubmit}>
           <Input>
             <label for={"namaBarang"}>Nama barang</label>
             <input value = {data.nama_barang} id={"nama_barang"} type={"text"} onChange={handleChange}/>
@@ -287,8 +292,9 @@ const Form = (props) => {
             <label for={"hargaBarang"}>Harga barang</label>
             <input value = {data.harga_barang} id={"harga_barang"} type={"text"} onChange={handleChange}/>
           </Input>
-          <button onClick={() => {
+          <button style={{"alignSelf":"flex-end","padding":"0.5em 1em","background":"#0112FC","border":"none","borderRadius":"5px","color":"white"}} onClick={() => {
             updateData(data.id_barang); 
+            props.ClosePopUp()
           }}>Submit</button>
         </form>
       </FormParent>
@@ -297,26 +303,32 @@ const Form = (props) => {
 }
 const Input = Styled.div `
     display: flex;
-    flex-direction: column;
-    height: 80px;
-    justify-content: center;
+    flex-direction: row;
+    height: 90px;
+    border: unset;
+    align-items: center;
+    justify-content: space-between;
     input {
       height: 20px;
       padding: 1em;
+      width: 70%;
     }
     textarea {
       padding: 0.5em;
       resize: none;
+      width: 70%;
+   
       overflow-y: scroll;
     }
     label {
       text-align: left;
+      width: 25%;
     }
 `
 
 const FormParent = Styled.div `
     width: 100%;
-    height: auto;
+    height: 900px;
     display: flex;
   
   

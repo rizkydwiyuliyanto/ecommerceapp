@@ -34,6 +34,7 @@ const Form = (props) => {
 
         if (status == 200) {
             alert("oke")
+            props.SetForm(!props.Form)
         }else if (status == 400) {
             alert("gagal")
         }
@@ -91,15 +92,15 @@ const Form = (props) => {
              </a>
          </div>
                  <form onSubmit={handleSubmit} style={{"display":"flex", "flexDirection":"column"}}>
-                    <div style={{"display":"flex"}}>
-                    <Input>
+                    <div style={{"display":"flex", "width":"100%","justifyContent":"space-between"}}>
+                    <InputName>
                         <label for="namaDepan">Nama depan</label>
                         <input name="namaDepan" style={inputStyle} value={data.namaDepan} id="namaDepan" onChange={handleChange}/>
-                    </Input>
-                    <Input>
+                    </InputName>
+                    <InputName>
                         <label for="namaBelakang">Nama belakang</label>
                         <input name="namaBelakang" style={inputStyle} value={data.namaBelakang} id="namaBelakang" onChange={handleChange}/>
-                    </Input>
+                    </InputName>
                     </div>
                     <Input>
                      <label for="no_telp">no.telp</label>
@@ -142,12 +143,23 @@ const FormParent = Styled.div `
 const Input = Styled.div `
     display: flex;
     flex-direction: column;
- 
+    
     margin-top: 1.2em;
     label {
         font-size: 0.95rem;
     }
 `
+const InputName = Styled.div `
+display: flex;
+flex-direction: column;
+
+margin-top: 1.2em;
+label {
+    font-size: 0.95rem;
+}
+width: 45%;
+`
+
 const Button = Styled.div `
     width: unset;
     margin: 2.5em 0;

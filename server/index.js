@@ -90,7 +90,7 @@ app.get("/api/barang/:id_barang", (req, res) => {
 })
 
 app.get("/api/transaksi", (req, res) => {
-  let sqlQuery = "SELECT pesan.id_pesan, pesan.jumlah, pesan.nama_depan, pesan.nama_belakang,alamat, catatan,no_telp, barang.nama_barang FROM pesan INNER JOIN barang on pesan.id_barang = barang.id_barang";
+  let sqlQuery = "SELECT pesan.id_pesan, pesan.jumlah, pesan.nama_depan, pesan.nama_belakang,pesan.alamat, catatan,pesan.status,no_telp,pesan.tanggal, barang.nama_barang, barang.harga_barang FROM pesan INNER JOIN barang on pesan.id_barang = barang.id_barang";
   db.query(sqlQuery, (err, result) => {
     if (err){
       console.log(err);
@@ -102,7 +102,7 @@ app.get("/api/transaksi", (req, res) => {
 
 app.get("/api/transaksi/:id_pesan", (req, res) => {
   let id = req.params.id_pesan;
-  let sqlQuery = `SELECT pesan.id_pesan, pesan.nama_depan, pesan.nama_belakang,pesan.alamat, pesan.catatan, pesan.no_telp, barang.nama_barang FROM pesan INNER JOIN barang on pesan.id_barang = barang.id_barang WHERE id_pesan = ${id}`;
+  let sqlQuery = `SELECT pesan.id_pesan, pesan.jumlah, pesan.nama_depan, pesan.nama_belakang,pesan.alamat, catatan,pesan.status,no_telp,pesan.tanggal, barang.nama_barang, barang.harga_barang FROM pesan INNER JOIN barang on pesan.id_barang = barang.id_barang WHERE id_pesan = ${id}`;
   db.query(sqlQuery, (err, result) => {
     if (err){
       console.log(err);
@@ -245,7 +245,7 @@ app.post("/api/pesan/:idBarang", (req, res) => {
   const catatan = req.body.catatan;
   const idBarang = req.params.idBarang;
   const jumlah = req.body.jumlah
-  let sqlQuery = "INSERT INTO `pesan` (`id_pesan`,`jumlah`,`nama_depan`, `nama_belakang`, `alamat`, `catatan`, `no_telp`, `id_barang`) VALUES ('',?, ?, ?, ?, ?, ?, ?) "
+  let sqlQuery = "INSERT INTO `pesan` (`id_pesan`,`jumlah`,`nama_depan`, `nama_belakang`, `alamat`, `catatan`, `no_telp`,`tanggal`, `id_barang`) VALUES ('',?, ?, ?, ?, ?, ?, current_timestamp(),?) "
   db.query(sqlQuery, [jumlah, namaDepan, namaBelakang, alamat, catatan, no_telp,idBarang],(err, result) => {
     if (err){
       console.log(err)

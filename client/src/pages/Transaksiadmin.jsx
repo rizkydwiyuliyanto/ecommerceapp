@@ -52,12 +52,15 @@ const Transaksiadmin = () => {
         {loading?<p>Loading...</p>: 
         <Table>
           <tr style={{"backgroundColor":"#353049","margin":"0","color":"#F4F4F4"}}>
+            <th>#</th>
             <th>Nama depan</th>
             <th>Nama belakang</th>
             <th>No telpon</th>
+            <th>Tanggal</th>
             <th>Alamat</th>
             <th>Nama barang</th>
             <th>Jumlah</th>
+            <th>Harga</th>
             <th>Catatan</th>
             <th>Status</th>
             <th>Hapus</th>
@@ -66,9 +69,11 @@ const Transaksiadmin = () => {
         {data.map((x, idx) => {
           return (
             <tr>
+              <td>{idx + 1}</td>
               <td>{x.nama_depan}</td>
               <td>{x.nama_belakang}</td>
               <td>{x.no_telp}</td>
+              <td>{x.tanggal.substring(0,10)}</td>
               <td>
                 {x.alamat.length > 5
                   ? x.alamat.substring(0, 10) + "..."
@@ -76,8 +81,9 @@ const Transaksiadmin = () => {
               </td>
               <td>{x.nama_barang}</td>
               <td>{x.jumlah}</td>
+              <td>Rp.{x.harga_barang * x.jumlah}</td>
               <td>{x.catatan.length > 5 ? x.catatan.substring(0, 10) + "...": x.catatan}</td>
-              <td>Proses</td>
+              <td>{x.status}</td>
               <td>
                     <a
                       onClick={() => {

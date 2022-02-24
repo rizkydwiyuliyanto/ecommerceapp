@@ -377,12 +377,13 @@ body {
    background-color: #fff;
    animation: popup 0.20s 0.2s ease-in-out forwards;
    width: 50%;
-   height: auto;
+   height: 50%;
    z-index: 2;
    text-align: center;
+   overflow-y: scroll;
    display: flex;
    flex-direction: column;
-   padding: 20px ;
+   padding: 1.5em 1em 4em 1em ;
    box-sizing: border-box;
   }
 
