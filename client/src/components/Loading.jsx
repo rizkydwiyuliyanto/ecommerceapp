@@ -2,7 +2,7 @@ import React from "react";
 
 const Loading = ()=> {
     let styles = {
-        "border": "1px solid black",
+        "border": "unset",
         "height":"100vh",
         "display":"flex",
         "align-items":"center"

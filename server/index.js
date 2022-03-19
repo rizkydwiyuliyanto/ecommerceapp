@@ -79,7 +79,7 @@ app.get("/api/barang", (req, res) => {
 
 app.get("/api/barang/:id_barang", (req, res) => {
   let id = req.params.id_barang;
-  let sqlQuery = "SELECT * FROM barang WHERE id_barang = ?";
+  let sqlQuery = "SELECT * FROM barang WHERE id = ?";
   db.query(sqlQuery, id, (err, result) => {
     if (err) {
       console.log(err)
@@ -90,7 +90,7 @@ app.get("/api/barang/:id_barang", (req, res) => {
 })
 
 app.get("/api/transaksi", (req, res) => {
-  let sqlQuery = "SELECT pesan.id_pesan, pesan.jumlah, pesan.nama_depan, pesan.nama_belakang,pesan.alamat, catatan,pesan.status,no_telp,pesan.tanggal, barang.nama_barang, barang.harga_barang FROM pesan INNER JOIN barang on pesan.id_barang = barang.id_barang";
+  let sqlQuery = "SELECT pesan.id_pesan, pesan.jumlah, pesan.nama_depan, pesan.nama_belakang,pesan.alamat, catatan,pesan.status,no_telp,pesan.tanggal, barang.nama_barang, barang.harga_barang FROM pesan INNER JOIN barang on pesan.id_barang = barang.id";
   db.query(sqlQuery, (err, result) => {
     if (err){
       console.log(err);
@@ -102,7 +102,7 @@ app.get("/api/transaksi", (req, res) => {
 
 app.get("/api/transaksi/:id_pesan", (req, res) => {
   let id = req.params.id_pesan;
-  let sqlQuery = `SELECT pesan.id_pesan, pesan.jumlah, pesan.nama_depan, pesan.nama_belakang,pesan.alamat, catatan,pesan.status,no_telp,pesan.tanggal, barang.nama_barang, barang.harga_barang FROM pesan INNER JOIN barang on pesan.id_barang = barang.id_barang WHERE id_pesan = ${id}`;
+  let sqlQuery = `SELECT pesan.id_pesan, pesan.jumlah, pesan.nama_depan, pesan.nama_belakang,pesan.alamat, catatan,pesan.status,no_telp,pesan.tanggal, barang.nama_barang, barang.harga_barang FROM pesan INNER JOIN barang on pesan.id_barang = barang.id WHERE id_pesan = ${id}`;
   db.query(sqlQuery, (err, result) => {
     if (err){
       console.log(err);
@@ -114,7 +114,7 @@ app.get("/api/transaksi/:id_pesan", (req, res) => {
 
 app.delete("/api/delete/:id_barang", (req, res) => {
    let id = req.params.id_barang;
-   let query = `DELETE FROM barang WHERE barang.id_barang = ${id}`
+   let query = `DELETE FROM barang WHERE barang.id = ${id}`
    db.query(query, (err, result) => {
      if (err) {
        console.log(err)
@@ -145,7 +145,7 @@ app.put("/api/update/:id_barang", (req, res) => {
   let kategoriBarang = req.body.kategori_barang;
   let gambarBarang = req.body.gambar_barang;
 
-  let query  = `UPDATE barang SET nama_barang = ?, deskripsi_barang = ?, harga_barang = ?, stok_barang = ?, kategori_barang = ? WHERE barang.id_barang = ${id} `
+  let query  = `UPDATE barang SET nama_barang = ?, deskripsi_barang = ?, harga_barang = ?, stok_barang = ?, kategori_barang = ? WHERE barang.id = ${id} `
   db.query(query, [namaBarang, deskripsiBarang, hargaBarang, stokBarang, kategoriBarang], (err, result) => {
     if (err){
       console.log(err)
@@ -210,7 +210,7 @@ app.post("/inputBarang",upload.single("gambar"), (req, res) => {
   const kategoriBarang = req.body.kategoriBarang;
   const gambar =finalImageURL;
   const sqlQuery =
-    "INSERT INTO `barang` (`id_barang`, `nama_barang`, `deskripsi_barang`, `harga_barang`, `stok_barang`, `kategori_barang`, `gambar_barang`) VALUES (NULL, ?, ?, ?, '', ?,?)";
+    "INSERT INTO `barang` (`id`, `nama_barang`, `deskripsi_barang`, `harga_barang`, `stok_barang`, `kategori_barang`, `gambar_barang`) VALUES (NULL, ?, ?, ?, '', ?,?)";
   db.query(
     sqlQuery,
     [namaBarang, deskBarang, harga, kategoriBarang, gambar],
@@ -257,7 +257,7 @@ app.post("/api/pesan/:idBarang", (req, res) => {
 
 app.delete("api/delete/:id", (req, res) => {
   let id = req.params.id;
-  let sqlQuery = "DELETE FROM `barang` WHERE `barang`.`id_barang` = ?"
+  let sqlQuery = "DELETE FROM `barang` WHERE `barang`.`id` = ?"
   db.query(sqlQuery, id, (err, result) => {
     if (err){
       console.log(err)
@@ -284,7 +284,7 @@ app.post("/transaksi/:barang/:pembeli", (req, res) => {
 app.get("/transaksi/:id_transaksi", (req, res) => {
   let transaksi = req.params.id_transaksi;
   const query =
-    "SELECT  transaksi.id_transaksi, pembeli.nama_pembeli, barang.nama_barang, transaksi.total_harga FROM pembeli, transaksi, barang WHERE transaksi.id_transaksi = ? AND pembeli.id_pembeli = transaksi.id_pembeli AND barang.id_barang = transaksi.id_barang;";
+    "SELECT  transaksi.id_transaksi, pembeli.nama_pembeli, barang.nama_barang, transaksi.total_harga FROM pembeli, transaksi, barang WHERE transaksi.id_transaksi = ? AND pembeli.id_pembeli = transaksi.id_pembeli AND barang.id = transaksi.id_barang;";
   db.query(query, [transaksi], (err, result) => {
     if (err) {
       console.log(err);
