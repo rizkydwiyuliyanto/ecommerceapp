@@ -39,17 +39,19 @@ const Page = (props) => {
     getData();
     console.log(items);
     console.log(isEmpty);
-    if (!isEmpty) {
+    if (!isEmpty){
       data.map((p) => {
         removeItem(p.id);
       });
+    }else{      
+      data.map((p) => {
+        addItem(p);
+      });
     }
-    data.map((p) => {
-      addItem(p);
-    });
     if (data.length > 0) {
       setLoading(false);
     }
+  
     if (!loading) {
       for (let i = 0; i < picture.length; i++) {
         if (Ref.current[i].accessKey == count) {
