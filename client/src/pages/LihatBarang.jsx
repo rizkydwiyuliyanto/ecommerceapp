@@ -84,13 +84,13 @@ const Barangadmin = () => {
               <tr style={{ height: "40px" }}>
                 <td>{idx + 1}</td>
                 <td>{x.nama_barang}</td>
-                <td>{x.id_barang}</td>
+                <td>{x.id}</td>
                 <td>{x.stok_barang}</td>
                 <td>{x.deskripsi_barang.length > 15?x.deskripsi_barang.substring(0, 15)+"...":x.deskripsi_barang}</td>
-                <td>{x.harga_barang}</td>
+                <td>{x.price}</td>
                 <td>
                   <a onClick={() => {
-                        setId(x.id_barang);
+                        setId(x.id);
                         setPopUp(!popUp);
                       }}>
                        <img src={"/delete1.png"} width={"20px"} height={"20px"}/>
@@ -100,13 +100,13 @@ const Barangadmin = () => {
                 <a onClick={async () => {
                         setPopUp2(!popUp2);
                         let status = await Axios.get(
-                          `http://localhost:3005/api/barang/${x.id_barang}`
+                          `http://localhost:3005/api/barang/${x.id}`
                         ).then((res) => {
                           return res.status;
                         });
                         if (status == 200) {
                           let data = await Axios.get(
-                            `http://localhost:3005/api/barang/${x.id_barang}`
+                            `http://localhost:3005/api/barang/${x.id}`
                           ).then((res) => {
                             return res.data;
                           });
@@ -237,7 +237,7 @@ const Form = (props) => {
   }
   useEffect(()=> {
     let initialState = {
-      "id_barang":props.Data[0].id_barang,
+      "id":props.Data[0].id,
       "nama_barang": props.Data[0].nama_barang,
       "deskripsi_barang": props.Data[0].deskripsi_barang,
       "harga_barang": props.Data[0].harga_barang,
@@ -258,7 +258,7 @@ const Form = (props) => {
     let status = await Axios.put(`http://localhost:3005/api/update/${id}`, {
       "nama_barang": data.nama_barang,
       "deskripsi_barang": data.deskripsi_barang,
-      "harga_barang": data.harga_barang,
+      "price": data.price,
       "stok_barang": data.stok_barang,
     }).then((res) => {
       return res.status
@@ -278,7 +278,7 @@ const Form = (props) => {
           </Input>
           <Input>
             <label for={"idBarang"}>Id barang</label>
-            <input value = {data.id_barang} id={"id_barang"} type={"text"} onChange={handleChange}/>
+            <input value = {data.id} id={"id"} type={"text"} onChange={handleChange}/>
           </Input>
           <Input>
             <label for={"stokBarang"}>Stok barnag</label>
@@ -290,10 +290,10 @@ const Form = (props) => {
           </Input>
           <Input>
             <label for={"hargaBarang"}>Harga barang</label>
-            <input value = {data.harga_barang} id={"harga_barang"} type={"text"} onChange={handleChange}/>
+            <input value = {data.price} id={"price"} type={"text"} onChange={handleChange}/>
           </Input>
           <button style={{"alignSelf":"flex-end","padding":"0.5em 1em","background":"#0112FC","border":"none","borderRadius":"5px","color":"white"}} onClick={() => {
-            updateData(data.id_barang); 
+            updateData(data.id); 
             props.ClosePopUp()
           }}>Submit</button>
         </form>

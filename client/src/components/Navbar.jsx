@@ -6,9 +6,9 @@ import { Link } from 'react-router-dom';
 const Navbar = () => {
   const RefNavbar = useRef();
   const scroll = () => {
+    // console.log(document.documentElement.scrollTop)
     if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
       RefNavbar.current.className = "test"
-      console.log("ok")
   }else {
       RefNavbar.current.className = "test2"
   }

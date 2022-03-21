@@ -30,38 +30,30 @@ const Page = (props) => {
     items,
     updateItemQuantity,
     removeItem,
+    emptyCart,
+    clearCartMetadata,
   } = useCart();
 
   useEffect(() => {
     AOS.init({
       duration: 2200,
     });
-    getData();
-    console.log(items);
-    console.log(isEmpty);
-    if (!isEmpty){
-      data.map((p) => {
-        removeItem(p.id);
-      });
-    }else{      
+    if (loading) {
+      emptyCart();
+      getData();
       data.map((p) => {
         addItem(p);
       });
     }
+    console.log(items);
+    console.log(isEmpty);
     if (data.length > 0) {
       setLoading(false);
     }
-  
     if (!loading) {
-      for (let i = 0; i < picture.length; i++) {
-        if (Ref.current[i].accessKey == count) {
-          Ref.current[i].className = "active";
-        } else {
-          Ref.current[i].className = "notActive";
-        }
-      }
+      activeImage();
     }
-  }, [loading, JSON.stringify(data)]);
+  }, [count, loading, JSON.stringify(data)]);
 
   let picture = [
     {
@@ -77,6 +69,18 @@ const Page = (props) => {
       picture: p3,
     },
   ];
+
+  const activeImage = () => {
+    console.log(count);
+    for (let i = 0; i < picture.length; i++) {
+      if (Ref.current[i].accessKey == count) {
+        Ref.current[i].className = "active";
+      } else {
+        Ref.current[i].className = "notActive";
+      }
+    }
+  };
+
   let image = picture.find((c) => {
     return c.id === count;
   });
@@ -93,7 +97,6 @@ const Page = (props) => {
         }
       );
       setData(data);
-      setLoading(false);
     }
   };
   const settings = {
@@ -104,8 +107,8 @@ const Page = (props) => {
     slidesToScroll: 1,
   };
 
-  const handleHover = () => {
-    setIsHover(!isHover);
+  const handleHover = (n) => {
+    setCount(n);
   };
 
   var linkStyle;
@@ -146,6 +149,10 @@ const Page = (props) => {
                     <div
                       accessKey={idx + 1}
                       ref={(el) => (Ref.current[idx] = el)}
+                      className="notActive"
+                      // onMouseOver={() => {
+                      //   handleHover(x.id)
+                      // }}
                       onClick={() => {
                         setCount(x.id);
                       }}

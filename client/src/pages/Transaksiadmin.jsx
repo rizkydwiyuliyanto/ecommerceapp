@@ -81,7 +81,7 @@ const Transaksiadmin = () => {
               </td>
               <td>{x.nama_barang}</td>
               <td>{x.jumlah}</td>
-              <td>Rp.{x.harga_barang * x.jumlah}</td>
+              <td>Rp.{x.price * x.jumlah}</td>
               <td>{x.catatan.length > 5 ? x.catatan.substring(0, 10) + "...": x.catatan}</td>
               <td>{x.status}</td>
               <td>

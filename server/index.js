@@ -90,7 +90,7 @@ app.get("/api/barang/:id_barang", (req, res) => {
 })
 
 app.get("/api/transaksi", (req, res) => {
-  let sqlQuery = "SELECT pesan.id_pesan, pesan.jumlah, pesan.nama_depan, pesan.nama_belakang,pesan.alamat, catatan,pesan.status,no_telp,pesan.tanggal, barang.nama_barang, barang.harga_barang FROM pesan INNER JOIN barang on pesan.id_barang = barang.id";
+  let sqlQuery = "SELECT pesan.id_pesan, pesan.jumlah, pesan.nama_depan, pesan.nama_belakang,pesan.alamat, catatan,pesan.status,no_telp,pesan.tanggal, barang.nama_barang, barang.price FROM pesan INNER JOIN barang on pesan.id_barang = barang.id";
   db.query(sqlQuery, (err, result) => {
     if (err){
       console.log(err);
@@ -102,7 +102,7 @@ app.get("/api/transaksi", (req, res) => {
 
 app.get("/api/transaksi/:id_pesan", (req, res) => {
   let id = req.params.id_pesan;
-  let sqlQuery = `SELECT pesan.id_pesan, pesan.jumlah, pesan.nama_depan, pesan.nama_belakang,pesan.alamat, catatan,pesan.status,no_telp,pesan.tanggal, barang.nama_barang, barang.harga_barang FROM pesan INNER JOIN barang on pesan.id_barang = barang.id WHERE id_pesan = ${id}`;
+  let sqlQuery = `SELECT pesan.id_pesan, pesan.jumlah, pesan.nama_depan, pesan.nama_belakang,pesan.alamat, catatan,pesan.status,no_telp,pesan.tanggal, barang.nama_barang, barang.price FROM pesan INNER JOIN barang on pesan.id_barang = barang.id WHERE id_pesan = ${id}`;
   db.query(sqlQuery, (err, result) => {
     if (err){
       console.log(err);
@@ -140,12 +140,12 @@ app.put("/api/update/:id_barang", (req, res) => {
   let id = req.params.id_barang;
   let namaBarang = req.body.nama_barang;
   let deskripsiBarang = req.body.deskripsi_barang;
-  let hargaBarang = req.body.harga_barang;
+  let hargaBarang = req.body.price;
   let stokBarang = req.body.stok_barang;
   let kategoriBarang = req.body.kategori_barang;
   let gambarBarang = req.body.gambar_barang;
 
-  let query  = `UPDATE barang SET nama_barang = ?, deskripsi_barang = ?, harga_barang = ?, stok_barang = ?, kategori_barang = ? WHERE barang.id = ${id} `
+  let query  = `UPDATE barang SET nama_barang = ?, deskripsi_barang = ?, price = ?, stok_barang = ?, kategori_barang = ? WHERE barang.id = ${id} `
   db.query(query, [namaBarang, deskripsiBarang, hargaBarang, stokBarang, kategoriBarang], (err, result) => {
     if (err){
       console.log(err)
@@ -210,7 +210,7 @@ app.post("/inputBarang",upload.single("gambar"), (req, res) => {
   const kategoriBarang = req.body.kategoriBarang;
   const gambar =finalImageURL;
   const sqlQuery =
-    "INSERT INTO `barang` (`id`, `nama_barang`, `deskripsi_barang`, `harga_barang`, `stok_barang`, `kategori_barang`, `gambar_barang`) VALUES (NULL, ?, ?, ?, '', ?,?)";
+    "INSERT INTO `barang` (`id`, `nama_barang`, `deskripsi_barang`, `price`, `stok_barang`, `kategori_barang`, `gambar_barang`) VALUES (NULL, ?, ?, ?, '', ?,?)";
   db.query(
     sqlQuery,
     [namaBarang, deskBarang, harga, kategoriBarang, gambar],
