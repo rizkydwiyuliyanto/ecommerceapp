@@ -196,6 +196,7 @@ app.post("/inputBarang",upload.single("gambar"), (req, res) => {
     namaBarang: Joi.string().required(),
     deskBarang: Joi.string().required(),
     harga: Joi.string().required(),
+    stok: Joi.string().required(),
     kategoriBarang: Joi.string().required(),
   });
   let result = schema.validate(req.body);
@@ -208,12 +209,13 @@ app.post("/inputBarang",upload.single("gambar"), (req, res) => {
   const deskBarang = req.body.deskBarang;
   const harga = req.body.harga;
   const kategoriBarang = req.body.kategoriBarang;
+  const stok_barang = req.body.stok;
   const gambar =finalImageURL;
   const sqlQuery =
-    "INSERT INTO `barang` (`id`, `nama_barang`, `deskripsi_barang`, `price`, `stok_barang`, `kategori_barang`, `gambar_barang`) VALUES (NULL, ?, ?, ?, '', ?,?)";
+    "INSERT INTO `barang` (`id`, `nama_barang`, `deskripsi_barang`, `price`, `stok_barang`, `kategori_barang`, `gambar_barang`) VALUES (NULL, ?, ?, ?, ?, ?,?)";
   db.query(
     sqlQuery,
-    [namaBarang, deskBarang, harga, kategoriBarang, gambar],
+    [namaBarang, deskBarang, harga, stok_barang, kategoriBarang, gambar],
     (err, result) => {
       if (err) {
         console.log(err);

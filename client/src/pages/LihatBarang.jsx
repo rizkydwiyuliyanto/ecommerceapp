@@ -73,9 +73,10 @@ const Barangadmin = () => {
             <th>#</th>
             <th>Nama barang</th>
             <th>Id barang</th>
+            <th>Harga</th>
             <th>Stok Barang</th>
             <th>Deskripsi barang</th>
-            <th>Harga</th>
+            <th>Kategori barang</th>
             <th>Hapus</th>
             <th>Update</th>
           </tr>
@@ -83,11 +84,12 @@ const Barangadmin = () => {
             return (
               <tr style={{ height: "40px" }}>
                 <td>{idx + 1}</td>
-                <td>{x.nama_barang}</td>
+                <td>{x.nama_barang.length > 15?x.nama_barang.substring(0, 15)+"...":x.nama_barang}</td>
                 <td>{x.id}</td>
+                <td>{x.price}</td>
                 <td>{x.stok_barang}</td>
                 <td>{x.deskripsi_barang.length > 15?x.deskripsi_barang.substring(0, 15)+"...":x.deskripsi_barang}</td>
-                <td>{x.price}</td>
+               <td>{x.kategori_barang}</td>
                 <td>
                   <a onClick={() => {
                         setId(x.id);
@@ -98,7 +100,6 @@ const Barangadmin = () => {
                 </td>
                 <td>
                 <a onClick={async () => {
-                        setPopUp2(!popUp2);
                         let status = await Axios.get(
                           `http://localhost:3005/api/barang/${x.id}`
                         ).then((res) => {
@@ -111,6 +112,7 @@ const Barangadmin = () => {
                             return res.data;
                           });
                           setSelectData(data);
+                          setPopUp2(!popUp2);
                         }
                       }}>
                     
@@ -220,15 +222,18 @@ const Barangadmin = () => {
 };
 
 const Form = (props) => {
-  let initialState = {
-    "id_barang": "",
-    "nama_barang": "",
-    "deskripsi_barang": "",
-    "harga_barang": "",
-    "stok_barang": "",
-    "kategori_barang": "",
+  const initialState = 
+  
+    {
+    "id":props.Data[0].id,
+    "nama_barang": props.Data[0].nama_barang,
+    "deskripsi_barang": props.Data[0].deskripsi_barang,
+    "price": props.Data[0].price,
+    "stok_barang": props.Data[0].stok_barang,
+    "kategori_barang": props.Data[0].kategori_barang,
     "gambar_barang": ""
   }
+
 
   const [data, setData] = useState(initialState)
   const handleSubmit = (e) => {
@@ -236,17 +241,7 @@ const Form = (props) => {
     e.preventDefault();
   }
   useEffect(()=> {
-    let initialState = {
-      "id":props.Data[0].id,
-      "nama_barang": props.Data[0].nama_barang,
-      "deskripsi_barang": props.Data[0].deskripsi_barang,
-      "harga_barang": props.Data[0].harga_barang,
-      "stok_barang": props.Data[0].stok_barang,
-      "kategori_barang": "",
-      "gambar_barang": ""
-    }
-    setData(initialState)
-    console.log("test")
+    console.log(data)
   },[JSON.stringify(props.Data)])
   const handleChange=(e) => {
     setData({
@@ -260,6 +255,7 @@ const Form = (props) => {
       "deskripsi_barang": data.deskripsi_barang,
       "price": data.price,
       "stok_barang": data.stok_barang,
+      "kategori_barang" : data.kategori_barang
     }).then((res) => {
       return res.status
     });
@@ -280,6 +276,11 @@ const Form = (props) => {
             <label for={"idBarang"}>Id barang</label>
             <input value = {data.id} id={"id"} type={"text"} onChange={handleChange}/>
           </Input>
+        
+          <Input>
+            <label for={"hargaBarang"}>Harga barang</label>
+            <input value = {data.price} id={"price"} type={"text"} onChange={handleChange}/>
+          </Input>
           <Input>
             <label for={"stokBarang"}>Stok barnag</label>
             <input value = {data.stok_barang} id={"stok_barang"} type={"text"} onChange={handleChange}/>
@@ -289,8 +290,8 @@ const Form = (props) => {
             <textarea value = {data.deskripsi_barang} id={"deskripsi_barang"} type={"text"} onChange={handleChange}/>
           </Input>
           <Input>
-            <label for={"hargaBarang"}>Harga barang</label>
-            <input value = {data.price} id={"price"} type={"text"} onChange={handleChange}/>
+            <label for={"kategoriBarang"}>Kategori barang</label>
+            <input value = {data.kategori_barang} id={"kategori_barang"} type={"text"} onChange={handleChange}/>
           </Input>
           <button style={{"alignSelf":"flex-end","padding":"0.5em 1em","background":"#0112FC","border":"none","borderRadius":"5px","color":"white"}} onClick={() => {
             updateData(data.id); 

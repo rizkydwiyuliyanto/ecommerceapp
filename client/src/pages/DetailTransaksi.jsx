@@ -51,8 +51,8 @@ function DetailTransaksi() {
      let barang = `Barang: ${data[0].nama_barang}`;
      let catatan = `Catatan: ${data[0].catatan}`;
      let jumlah = `Jumlah: ${data[0].jumlah}`;
-     let harga = `Harga: ${data[0].harga_barang}`
-     let Totalharga = `Total harga: Rp.${(data[0].jumlah * data[0].harga_barang)}`
+     let harga = `Harga: ${data[0].price}`
+     let Totalharga = `Total harga: Rp.${(data[0].jumlah * data[0].price)}`
      let url = `https://wa.me/${phoneNumber}?text=`+"Hai " + namaDepan + "%0A"+"Detail pemesanan: "+"%0A"+"%0A"+barang+"%0a"+jumlah+"%0A" + harga + "%0A" + Totalharga + "%0A" + catatan+"%0A" + alamat
      window.open(url,"_blank").focus()
   }
@@ -106,7 +106,7 @@ function DetailTransaksi() {
       </div>
       <div style={style}>  
          <p style={{"background":"blue","padding":"0.5em","color":"white"}}>Harga:</p>
-         <p style={{"padding":"0.5em", "height":"100px","overflow-y":"scroll","lineHeight":"23px"}}>Rp.{(data[0].jumlah) * (data[0].harga_barang)}</p>
+         <p style={{"padding":"0.5em", "height":"100px","overflow-y":"scroll","lineHeight":"23px"}}>Rp.{(data[0].jumlah) * (data[0].price)}</p>
       </div>
      </div>
      <Button onClick={gotowhatsapp}>Kirim</Button>

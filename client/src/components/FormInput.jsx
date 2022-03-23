@@ -7,6 +7,7 @@ const FormInput = () => {
         "namaBarang":"",
         "deskBarang":"",
         "harga":0,
+        "stok":0,
         "kategoriBarang":"",
         "gambar":""
     }
@@ -110,6 +111,12 @@ const FormInput = () => {
                    <label>harga</label>
                    <div style={style}>
                    <input value= {data.harga} name="harga" type={"text"} onChange={handleChange}/>
+                   </div>
+                </Input>
+                <Input>
+                   <label>stok</label>
+                   <div style={style}>
+                   <input value= {data.stok} name="stok" type={"text"} onChange={handleChange}/>
                    </div>
                 </Input>
                 <Input>

@@ -45,8 +45,8 @@ const Page = (props) => {
         addItem(p);
       });
     }
-    console.log(items);
-    console.log(isEmpty);
+    // console.log(items);
+    // console.log(isEmpty);
     if (data.length > 0) {
       setLoading(false);
     }
@@ -71,7 +71,7 @@ const Page = (props) => {
   ];
 
   const activeImage = () => {
-    console.log(count);
+    // console.log(count);
     for (let i = 0; i < picture.length; i++) {
       if (Ref.current[i].accessKey == count) {
         Ref.current[i].className = "active";
@@ -105,6 +105,9 @@ const Page = (props) => {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
+    autoplay: true,
+    speed: 3000,
+    autoplaySpeed: 2500,
   };
 
   const handleHover = (n) => {
@@ -172,30 +175,60 @@ const Page = (props) => {
             </Image>
           </Child>
 
-          <div
-            style={{
-              marginTop: "1.5em",
-              width: "100%",
-              height: "250px",
-              position: "relative",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <img
-              style={{
-                objectFit: "cover",
-                borderRadius: "10px",
-                position: "absolute",
-                zIndex: "-2",
-              }}
-              src={"6007b74724c75.jpg"}
-              width={"100%"}
-              height={"100%"}
-            />
-            <h2 style={{ color: "white", fontWeight: "bold" }}>Produk Kami</h2>
-          </div>
+<div>
+            <Slider  
+            {...settings}
+            >
+              <div>
+                <img
+                  style={{
+                    objectFit: "cover",
+                    borderRadius: "10px",
+                    position: "relative",
+                    zIndex: "-2",
+                  }}
+                  src={"WhatsApp Image 2022-02-25 at 13.51.02.jpeg"}
+                  width={"100%"}
+                  height = {"250px"}
+                />
+                <h2 style={{ color: "white", fontWeight: "bold" }}>
+                  Produk Kami
+                </h2>
+              </div>
+              <div>
+              <img
+                  style={{
+                    objectFit: "cover",
+                    borderRadius: "10px",
+                    position: "relative",
+                    zIndex: "-2",
+                  }}
+                  src={"WhatsApp Image 2022-02-25 at 13.50.56.jpeg"}
+                  width={"100%"}
+                  height = {"250px"}
+                />
+                <h2 style={{ color: "white", fontWeight: "bold" }}>
+                  Produk Kami
+                </h2>
+              </div>
+              <div>
+              <img
+                  style={{
+                    objectFit: "cover",
+                    borderRadius: "10px",
+                    position: "relative",
+                    zIndex: "-2",
+                  }}
+                  src={"WhatsApp Image 2022-02-25 at 13.46.31.jpeg"}
+                  width={"100%"}
+                  height = {"250px"}
+                />
+                <h2 style={{ color: "white", fontWeight: "bold" }}>
+                  Produk Kami
+                </h2>
+              </div>
+            </Slider>
+            </div>
 
           {items.map((x, idx) => {
             return (
@@ -282,8 +315,8 @@ const Page = (props) => {
                         <Button
                           onClick={() => {
                             props.SetForm();
-                            // props.SetBarang(x.id_barang);
-                            // console.log(1)
+                            props.SetBarang(x.id);
+                            props.SetJumlah(x.quantity);
                           }}
                         >
                           <img
@@ -436,15 +469,25 @@ width: 60%;
 `;
 
 const Content = (props) => {
+  const [barang, SetBarang] = useState();
+  const [jumlah, SetJumlah] = useState();
+  useEffect(()=> {
+    props.SetBarang(barang);
+    props.SetJumlah(jumlah);
+    // console.log(barang)
+  })
   return (
     <CartProvider>
       <Page
         SetForm={() => {
           props.SetForm();
         }}
-        // SetBarang = {() => {
-        //   props.SetBarang()
-        // }}
+        SetBarang = {(x) => {
+          SetBarang(x)
+        }}
+        SetJumlah = {(n)=> {
+          SetJumlah(n)
+        }}
       />
     </CartProvider>
   );
