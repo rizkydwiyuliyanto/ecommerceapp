@@ -2,9 +2,10 @@ import React from "react";
 import Styled from "styled-components";
 import { useState, useEffect, useRef } from "react";
 import Axios from "axios";
-import p1 from "./produk.png";
-import p2 from "./produk2.png";
-import p3 from "./produk3.png";
+import p1 from "./Pupuk-cair(cucian_beras).jpeg";
+import p2 from "./Pupuk-cair(kotoran_hewan).jpeg";
+import p3 from "./Pupuk-cair(limbah_buah).jpeg";
+import p4 from "./Pupuk-padat.jpeg";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import Slider from "react-slick";
@@ -68,6 +69,10 @@ const Page = (props) => {
       id: 3,
       picture: p3,
     },
+    {
+      id: 4,
+      picture: p4,
+    },
   ];
 
   const activeImage = () => {
@@ -104,10 +109,23 @@ const Page = (props) => {
     infinite: true,
     speed: 500,
     slidesToShow: 1,
+    appendDots: dots => (
+      <div
+        style={{
+          backgroundColor: "#d4d4d498",
+          padding: "10px",
+          position:"absolute",
+          bottom:"28px"
+        }}
+      >
+        <ul style={{ margin: "0px" }}> {dots} </ul>
+      </div>
+    ),
     slidesToScroll: 1,
     autoplay: true,
-    speed: 3000,
-    autoplaySpeed: 2500,
+    speed: 900,
+    autoplaySpeed: 3000,
+    cssEase: "linear"
   };
 
   const handleHover = (n) => {
@@ -140,9 +158,10 @@ const Page = (props) => {
             <Image>
               <div style={{ height: "400px", border: "unset" }}>
                 <img
-                  style={{ objectFit: "contain" }}
+                  style={{ objectFit: "cover" }}
                   src={image.picture}
                   width={"310px"}
+                  height={"100%"}
                 />
               </div>
 
@@ -175,15 +194,24 @@ const Page = (props) => {
             </Image>
           </Child>
 
-<div>
-            <Slider  
+<div style={{
+  borderRadius: "10px",
+//  border:"2px solid black",
+ height:"250px",
+ marginTop:"3em",
+ overflow:"hidden",
+ position:"static",
+zIndex:"0"
+}}>
+            <Slider 
+      
             {...settings}
             >
               <div>
                 <img
                   style={{
                     objectFit: "cover",
-                    borderRadius: "10px",
+                    
                     position: "relative",
                     zIndex: "-2",
                   }}
@@ -199,7 +227,6 @@ const Page = (props) => {
               <img
                   style={{
                     objectFit: "cover",
-                    borderRadius: "10px",
                     position: "relative",
                     zIndex: "-2",
                   }}
@@ -215,7 +242,6 @@ const Page = (props) => {
               <img
                   style={{
                     objectFit: "cover",
-                    borderRadius: "10px",
                     position: "relative",
                     zIndex: "-2",
                   }}
@@ -420,6 +446,8 @@ const Product = Styled.div`
    border: unset;
    width: 100%;
    justify-content: space-between;
+   position:relative;
+   top:20px;
    div {
        width: 15%;
        display: flex;
