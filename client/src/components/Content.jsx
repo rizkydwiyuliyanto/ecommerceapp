@@ -381,7 +381,7 @@ zIndex:"0"
                       style={{
                         borderTop: "unset",
                         height: "150px",
-                        "overflow-y": "scroll",
+                        overflowY: "scroll",
                         lineHeight: "25px",
                         paddingRight: "0.6em",
                       }}

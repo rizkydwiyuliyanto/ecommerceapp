@@ -34,9 +34,9 @@ const Navbar = () => {
         <h2 style={{"color":"#5E9B26"}}>Your logo</h2>
       </Logo>
       <NavbarChild>
-        <a><Link style={styles} to={"/"}>Home</Link></a>
+        <Link style={styles} to={"/"}>Home</Link>
         <a>Produk kami</a>
-        <a><Link style={styles} to={"/login"}>Login</Link></a>
+        <Link style={styles} to={"/login"}>Login</Link>
       </NavbarChild>
       </div>
     </NavbarParent>

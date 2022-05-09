@@ -1,4 +1,3 @@
-import react from "react";
 import Navbaradmin from "../components/Navbaradmin";
 import AdminContent from "../components/Admincontent";
 import Profile from "../components/Profile";
@@ -6,14 +5,7 @@ import Styled from "styled-components";
 import FormInput from "../components/FormInput";
 import { useState, useEffect } from "react";
 import Axios from "axios";
-import p1 from "../components/produk.png";
-import p2 from "../components/produk2.png";
-import p3 from "../components/produk3.png";
 
-let style = {
-  border: "1px solid #BBC4E4",
-  width: "100%",
-};
 const Barangadmin = () => {
   const [data, setData] = useState([]);
   useEffect(() => {
@@ -31,27 +23,6 @@ const Barangadmin = () => {
           setData(data);
       }
   }
-
-  let items = [
-    {
-      id: 1,
-      picture: p1,
-      bahan: "Pupuk padat",
-      harga: "Rp15.000",
-    },
-    {
-      id: 2,
-      picture: p2,
-      bahan: "Pupuk padat",
-      harga: "Rp15.000",
-    },
-    {
-      id: 3,
-      picture: p3,
-      bahan: "Pupuk cair",
-      harga: "Rp14.000",
-    },
-  ];
 
   return (
     <>

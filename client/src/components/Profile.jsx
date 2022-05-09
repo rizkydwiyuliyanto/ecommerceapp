@@ -1,40 +1,22 @@
-import react from "react";
-import { useState,useEffect } from 'react';
-import Axios from 'axios';
-
+import { useContext } from 'react';
+import { context } from "../UserContext";
 const Profile = () => {
-    const [profile, setProfile] = useState([]);
-    const [loading, setLoading] = useState(true);
-
-    const getData = async() => {
-        let data = await Axios.get("https://randomuser.me/api/").then((res) => {
-            return res
-        })
-        if (data.status == 200) {
-            const getProfile = await Axios.get("https://randomuser.me/api/").then((res) => {
-                return res.data
-            })
-            let user = {
-                "firstName" : getProfile.results[0].name.first,
-                "lastName" : getProfile.results[0].name.last,
-                "image": getProfile.results[0].picture.large
-            }
-            setProfile(user)
-            setLoading(false)
-        }
-    }
-
-useEffect(() => {
-    getData()
-    console.log(profile)
- }, [])
-
+    const {profile} = useContext(context)
     return (
+      // <div style={{"width":"15%", "border":"unset", "display":"flex","alignItems":"center","justifyContent":"space-between"}}>
+      //    {!profile.firstName?"loading...":<a style={{"border":"unset","fontSize":"0.95rem"}}>Hello {profile.firstName}</a>}
+      //    {!profile.image?<img style={{"borderRadius":"50px", "boxShadow":"0.5px 0px 1px 1px black"}} src={"/user.png"} width={"50px"}/>:<img style={{"borderRadius":"50px", "boxShadow":"0.5px 0px 1px 1px black"}} width={"50px"} src={profile.image}/>}
+      // </div>
+      <div>
+    {profile && 
+    <>
         <div style={{"width":"15%", "border":"unset", "display":"flex","alignItems":"center","justifyContent":"space-between"}}>
-           {!profile.firstName?"loading...":<a style={{"border":"unset","fontSize":"0.95rem"}}>Hello {profile.firstName}</a>}
-           {!profile.image?<img style={{"borderRadius":"50px", "boxShadow":"0.5px 0px 1px 1px black"}} src={"/user.png"} width={"50px"}/>:<img style={{"borderRadius":"50px", "boxShadow":"0.5px 0px 1px 1px black"}} width={"50px"} src={profile.image}/>}
+           {!profile.firstName?"loading...":<p style={{"border":"unset","fontSize":"0.95rem"}}>Hello {profile.firstName}</p>}
+           {!profile.image?<img alt='profile' style={{"borderRadius":"50px", "boxShadow":"0.5px 0px 1px 1px black"}} src={"/user.png"} width={"50px"}/>:<img style={{"borderRadius":"50px", "boxShadow":"0.5px 0px 1px 1px black"}} width={"50px"} src={profile.image}/>}
         </div>
-    )
+    </>
+      }</div>
+    );
 }
 
 export default Profile

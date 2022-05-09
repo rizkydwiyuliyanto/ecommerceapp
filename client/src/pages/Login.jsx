@@ -4,35 +4,29 @@ import Styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import Loading from '../components/Loading';
 import Axios from 'axios';
-import PropsTypes from 'prop-types';
-import { useNavigate } from "react-router-dom";
+import PropTypes from "prop-types"
+import { useNavigate, useLocation } from "react-router-dom";
 
 const Login = (props) => {
     const [loading, setLoading] = useState(true);
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
-    let navigate = useNavigate()
-    function test(x){
-      props.Islogin(x)
-    }
+    const location = useLocation()
+    const navigate = useNavigate();
     useEffect(() => {
-         
         setTimeout(() => {
             setLoading(false);
         }, 500);
-    }, [loading])
+    }, [])
     let inputStyle = {
         "border":"0.5px solid #bfbfbf",
         "padding":"0.5em 0.7em",
         "marginTop":"0.2em",
         "borderRadius":"5px"
     }
-
-    const handleSubmit = (e) => {
+    const handleSubmit= async (e) => {
       e.preventDefault()
-    }
-    const submit = async () => {
-      let data = await Axios.post("http://localhost:3005/login", {
+      let response = await Axios.post("http://localhost:3005/login", {
         username: email,
         password: password,
       })
@@ -42,14 +36,15 @@ const Login = (props) => {
         .catch((err) => {
           return err.response;
         });
-      if (data.status == 200) {
-        test(true)
-        navigate('/admin')
+      if (response.status == 200) {
+        props.SetToken(response.data);
+        const origin = location.state?.from?.pathname || '/admin/transaksi';
+        navigate(origin);
         // alert("anda berhasil login")
-      } else if (data.status == 400){
-        alert(data.data);
-      }else if (data.status == 403){
-        alert(data.data.message)
+      } else if (response.status == 400){
+        alert(response.data);
+      }else if (response.status == 403){
+        alert(response.data.message)
       }
       setEmail("")
       setPassword("")
@@ -64,20 +59,20 @@ const Login = (props) => {
                  <h4 style={{"textAlign":"center"}}>Masuk ke akun anda</h4>
                  <form onSubmit={handleSubmit} style={{"display":"flex", "flexDirection":"column"}}>
                     <Input>
-                        <label for="email">Email</label>
+                        <label htmlFor="email">Email</label>
                         <input style={inputStyle} value={email} id="email" onChange={(e) =>{
                             setEmail(e.currentTarget.value)
                         }}/>
                     </Input>
                     <Input>
-                     <label for="password">Password</label>
+                     <label htmlFor="password">Password</label>
                      <input style={inputStyle} type={"password"} value={password} id="password" onChange={(e) =>{
                             setPassword(e.currentTarget.value)
                      }}/>
                     </Input>
 
                     <Button>
-                        <button onClick={submit}>Login</button>
+                        <button onClick={handleSubmit}>Login</button>
                     </Button>
                     <a style={{"fontSize":"0.85rem"}}>Belum punya akun? Daftar</a>
                  </form>
@@ -85,8 +80,10 @@ const Login = (props) => {
            </Form>}
         </>
     )
-    
-}
+  }
+  Login.propTypes= {
+    SetToken: PropTypes.func.isRequired
+  }
  
 const Form = Styled.div `
     border: 1px solid black;
