@@ -29,26 +29,25 @@ const Login = (props) => {
     }
     const handleSubmit= async (e) => {
       e.preventDefault()
-      let response = await Axios.post("http://localhost:3005/login", {
-        username: email,
-        password: password,
-      })
-        .then((res) => {
-          return res;
-        })
-        .catch((err) => {
-          return err.response;
-        });
-      if (response.status == 200) {
-        SetToken(response.data);
-        // GetData();
+      try{
+          let response = await Axios.post("http://localhost:3005/login", {
+            username: email,
+            password: password,
+          },{
+              headers: {
+                  'Accept':"application/json",
+                  'Content-Type' : "application/json"
+              },
+              responseType:"json",
+            })
+      let data = response.data
+      if (data) {
+        SetToken(data);
         const origin = location.state?.from?.pathname || '/admin/transaksi';
         navigate(origin);
-        // alert("anda berhasil login")
-      } else if (response.status == 400){
-        alert(response.data);
-      }else if (response.status == 403){
-        alert(response.data.message)
+      }
+      }catch (err) {
+          alert(err.response.data.message)
       }
       setEmail("")
       setPassword("")
@@ -76,7 +75,7 @@ const Login = (props) => {
                     </Input>
 
                     <Button>
-                        <button onClick={handleSubmit}>Login</button>
+                        <button>Login</button>
                     </Button>
                     <a style={{"fontSize":"0.85rem"}}>Belum punya akun? Daftar</a>
                  </form>

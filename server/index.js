@@ -154,10 +154,35 @@ app.put("/api/update/:id_barang", (req, res) => {
   })
 })
 
-app.use('/login', (req, res) => {
-  res.send({
-    token: "test123"
+app.post('/login', async (req, res) => {
+  const { username, password } = req.body;
+  const sql = "SELECT * FROM admin"
+  const schema = Joi.object({
+    username: Joi.string().required(),
+    password: Joi.string().required()
   })
+  try {
+    const value = await schema.validateAsync({
+      username: username,
+      password: password,
+    });
+    let sql = "SELECT * FROM admin";
+    db.query(sql, (err, result) => {
+      let data = null
+      if (err) {
+        console.log(err)
+      }
+      data = result
+      let adminUsername = data[0].username;
+      let adminPassword = data[0].password;
+      if (username === adminUsername && password ===adminPassword) {
+        res.status(200).send({token: "test123"})
+      }
+      res.status(403).send({ message:"Password salah" })
+    })
+  }catch (err){
+    res.status(400).send({message: err.message});
+  }
 })
 
 // app.post("/login", (req, res) => {

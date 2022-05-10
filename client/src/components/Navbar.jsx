@@ -36,7 +36,6 @@ const Navbar = () => {
       <NavbarChild>
         <Link style={styles} to={"/"}>Home</Link>
         <a>Produk kami</a>
-        <Link style={styles} to={"/login"}>Login</Link>
       </NavbarChild>
       </div>
     </NavbarParent>
