@@ -67,6 +67,8 @@ const Barangadmin = () => {
           <Profile />
         </div>
         <Table className="admin">
+          <thead>
+            
           <tr
           style={{"backgroundColor":"#353049","margin":"0","color":"#F4F4F4"}}
           >
@@ -80,9 +82,11 @@ const Barangadmin = () => {
             <th>Hapus</th>
             <th>Update</th>
           </tr>
+          </thead>
+          <tbody>
           {data.map((x, idx) => {
             return (
-              <tr style={{ height: "40px" }}>
+              <tr key={idx} style={{ height: "40px" }}>
                 <td>{idx + 1}</td>
                 <td>{x.nama_barang.length > 15?x.nama_barang.substring(0, 15)+"...":x.nama_barang}</td>
                 <td>{x.id}</td>
@@ -124,6 +128,7 @@ const Barangadmin = () => {
               </tr>
             );
           })}
+        </tbody>
         </Table>
       </AdminContent>
       {popUp ? (

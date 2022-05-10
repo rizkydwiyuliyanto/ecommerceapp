@@ -1,5 +1,5 @@
 import "./App.css";
-import { useEffect, useState } from "react";
+import { useContext } from "react";
 import { BrowserRouter, Route, Routes, Navigate, useLocation } from "react-router-dom";
 import Main from "./pages/Main";
 import Login from "./pages/Login";
@@ -9,13 +9,14 @@ import Barangadmin from "./pages/Barangadmin";
 import InputBarang from "./pages/InputBarang";
 import LihatBarang from "./pages/LihatBarang";
 import DetailTransaksi from "./pages/DetailTransaksi";
-import { UserContext } from "./UserContext.js";
-import useToken from "./useToken";
+import { context } from './UserContext'
+
 function App() {
-  const { token, setToken } = useToken();
+  // const { token, setToken } = useToken();
+  const { Token } = useContext(context)
   const PrivateRoute = ({ children }) => {
     const location = useLocation()
-    if (!token) {
+    if (!Token) {
       return <Navigate to="/login" replace state={{ from: location }}/>
      }
      return children
@@ -23,10 +24,9 @@ function App() {
 
   return (
     <BrowserRouter>
-      <UserContext>
         <Routes>
           <Route path="/" element={<Main />} />
-          <Route path="/login" element={<Login SetToken = {setToken}/>} />
+          <Route path="/login" element={<Login />} />
           <Route path="/admin" element={<Admin />} />
           <Route
             path="/admin/transaksi"
@@ -78,7 +78,7 @@ function App() {
             />
           </Route>
         </Routes>
-      </UserContext>
+
     </BrowserRouter>
   );
 }

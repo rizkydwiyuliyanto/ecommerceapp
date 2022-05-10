@@ -6,6 +6,8 @@ import Loading from '../components/Loading';
 import Axios from 'axios';
 import PropTypes from "prop-types"
 import { useNavigate, useLocation } from "react-router-dom";
+import { useContext } from 'react';
+import { context } from '../UserContext';
 
 const Login = (props) => {
     const [loading, setLoading] = useState(true);
@@ -13,6 +15,7 @@ const Login = (props) => {
     const [password, setPassword] = useState();
     const location = useLocation()
     const navigate = useNavigate();
+    const {SetToken} = useContext(context)
     useEffect(() => {
         setTimeout(() => {
             setLoading(false);
@@ -37,7 +40,8 @@ const Login = (props) => {
           return err.response;
         });
       if (response.status == 200) {
-        props.SetToken(response.data);
+        SetToken(response.data);
+        // GetData();
         const origin = location.state?.from?.pathname || '/admin/transaksi';
         navigate(origin);
         // alert("anda berhasil login")
@@ -81,9 +85,9 @@ const Login = (props) => {
         </>
     )
   }
-  Login.propTypes= {
-    SetToken: PropTypes.func.isRequired
-  }
+  // Login.propTypes= {
+  //   SetToken: PropTypes.func.isRequired
+  // }
  
 const Form = Styled.div `
     border: 1px solid black;

@@ -1,6 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function useToken() {
+    useEffect(() => {
+        console.log(getToken())
+    },[])
     const getToken = () => {
         const tokenString = localStorage.getItem("token")
         const userToken = JSON.parse(tokenString);

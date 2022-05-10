@@ -38,18 +38,18 @@ const Navbaradmin = () => {
         <h2 style={{"color":"#E2E7F3"}}>Your logo</h2>
       </Logo>
       <NavbarChild>
-        <a>
+
          <img style={{"marginRight":"0.9em"}} src={"/transaction.png"} width={"30px"} height={"25px"}/>
          <Link style={{textDecoration:"none"}} to="/admin/transaksi">Transaksi</Link>
-        </a>
-        <a>
+
+
           <img style={{"marginRight":"0.9em"}} src={"/input.png"} width={"30px"} height={"25px"}/>
           <Link style={{textDecoration:"none"}} to ="/admin/inputbarang">Input barang</Link>
-        </a>
-        <a>
+  
+
           <img style={{"marginRight":"0.9em"}} src={"/menu.png"} width={"30px"} height={"25px"}/>
           <Link style={{textDecoration:"none"}} to ="/admin/lihatbarang">Lihat barang</Link>
-        </a>
+
       </NavbarChild>
 
       </div>

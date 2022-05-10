@@ -1,9 +1,10 @@
 import { createContext, useEffect, useState } from "react";
 import Axios from "axios";
+import useToken from "./useToken";
 
 const context = createContext()
-
 const UserContext = ({ children }) => {
+    const { token, setToken } = useToken() //custom hook
     const [profile, setProfile] = useState();
     const getData = async() => {
         let data = await Axios.get("https://randomuser.me/api/").then((res) => {
@@ -18,15 +19,18 @@ const UserContext = ({ children }) => {
                 "lastName" : getProfile.results[0].name.last,
                 "image": getProfile.results[0].picture.large
             }
-            setProfile(user)
+            setProfile((prev) => prev = user);
+            console.log(user)
         }
     }
-
 useEffect(() => {
-    getData()
-    console.log(profile)
- }, [])
- const value = {profile}
+  if (token) {
+      getData() 
+  }else{
+      console.log("token undefined");
+  }
+}, [token])
+ const value = {profile, SetToken: setToken, Token: token}
  return (
     <context.Provider value={value}>
         {children}

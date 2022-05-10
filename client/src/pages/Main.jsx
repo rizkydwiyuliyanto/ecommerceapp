@@ -4,7 +4,7 @@ import Container from "../components/Container";
 import Content from "../components/Content";
 import Footer from "../components/Footer";
 import Loading from "../components/Loading";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Form from '../components/Form';
 
 const Main = () => {
@@ -13,10 +13,7 @@ const Main = () => {
   const [barang, setBarang] = useState();
   const [jumlah, setJumlah] = useState(0);
 
-  useEffect(() => {
-    console.log(barang);
-    console.log(jumlah)
-  }, [barang, jumlah]);
+
 
   return (
     <>

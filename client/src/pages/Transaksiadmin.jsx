@@ -51,6 +51,7 @@ const Transaksiadmin = () => {
       <div>
         {loading?<p>Loading...</p>: 
         <Table>
+          <thead>
           <tr style={{"backgroundColor":"#353049","margin":"0","color":"#F4F4F4"}}>
             <th>#</th>
             <th>Nama depan</th>
@@ -66,9 +67,11 @@ const Transaksiadmin = () => {
             <th>Hapus</th>
             <th>Detail</th>
           </tr>
+          </thead>
+          <tbody>
         {data.map((x, idx) => {
           return (
-            <tr>
+            <tr key={idx}>
               <td>{idx + 1}</td>
               <td>{x.nama_depan}</td>
               <td>{x.nama_belakang}</td>
@@ -96,15 +99,14 @@ const Transaksiadmin = () => {
 
               </td>
               <td>
-              <a>
                     <Link to={`/admin/transaksi/detail/${x.id_pesan}`}>
                       <img src={"/document.png"} width={"20px"} height={"20px"}/>
                     </Link>
-                </a>
               </td>
             </tr>
           );
         })}
+                </tbody>
         </Table>}
        
       </div>
