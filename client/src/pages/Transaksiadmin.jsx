@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import Navbaradmin from "../components/Navbaradmin";
 import Styled from "styled-components";
 import AdminContent from "../components/Admincontent";
@@ -6,16 +6,18 @@ import Profile from "../components/Profile";
 import Axios from "axios";
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { context } from "../UserContext";
 
 const Transaksiadmin = () => {
   const [data, setData] = useState();
   const [popUp, setPopUp] = useState(false);
   const [id, setId] = useState();
   const [loading, setLoading] = useState(true);
+  const [counter, setCounter] = useState(0);
+  const {Data, Loading, Seturl} = useContext(context);
   useEffect(() => {
-    getData()
-    console.log(data)
-  }, [JSON.stringify(data)])
+      Seturl("http://localhost:3005/api/transaksi")
+  }, [])
   const getData = async () => {
         let status = await Axios.get("http://localhost:3005/api/transaksi").then((res) => {
           return res.status
@@ -49,7 +51,7 @@ const Transaksiadmin = () => {
           <Profile/>
       </div>
       <div>
-        {loading?<p>Loading...</p>: 
+        {Loading?<p>Loading...</p>: 
         <Table>
           <thead>
           <tr style={{"backgroundColor":"#353049","margin":"0","color":"#F4F4F4"}}>
@@ -69,7 +71,7 @@ const Transaksiadmin = () => {
           </tr>
           </thead>
           <tbody>
-        {data.map((x, idx) => {
+        {Data.map((x, idx) => {
           return (
             <tr key={idx}>
               <td>{idx + 1}</td>
@@ -108,7 +110,8 @@ const Transaksiadmin = () => {
         })}
                 </tbody>
         </Table>}
-       
+       {/* <p>{counter}</p>
+       <button onClick={setCounter(prev => prev + 1)}>Increment</button> */}
       </div>
       </AdminContent>
       {popUp ? (

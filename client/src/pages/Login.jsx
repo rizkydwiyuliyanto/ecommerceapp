@@ -5,9 +5,10 @@ import { useState, useEffect } from 'react';
 import Loading from '../components/Loading';
 import Axios from 'axios';
 import PropTypes from "prop-types"
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Navigate } from "react-router-dom";
 import { useContext } from 'react';
 import { context } from '../UserContext';
+import Transaksiadmin from './Transaksiadmin';
 
 const Login = (props) => {
     const [loading, setLoading] = useState(true);
@@ -15,7 +16,7 @@ const Login = (props) => {
     const [password, setPassword] = useState();
     const location = useLocation()
     const navigate = useNavigate();
-    const {SetToken} = useContext(context)
+    const {SetToken, Token} = useContext(context);
     useEffect(() => {
         setTimeout(() => {
             setLoading(false);
@@ -52,10 +53,11 @@ const Login = (props) => {
       setEmail("")
       setPassword("")
     };
-
+    if (Token) {
+      return <Navigate replace to={"/admin/transaksi"} />;
+    }
     return (
         <>
-      
            <Navbar/>
            {loading ?<Loading/>: <Form>
               <div style={{"width":"35%","boxShadow":"0px 0px 4px 0px black","padding":"2em 2em 3.6em 2em", "borderRadius":"5px"}}>

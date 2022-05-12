@@ -4,8 +4,25 @@ import useToken from "./useToken";
 
 const context = createContext()
 const UserContext = ({ children }) => {
+    
     const { token, setToken } = useToken() //custom hook
     const [profile, setProfile] = useState();
+    const [state, setState] = useState(true);
+    const [data, setData] = useState();
+    const [loading, setLoading] = useState(true);
+    const [url, setUrl] = useState("");
+    const getDataTransaksi = async (url) => {
+        let status = await Axios.get(url).then((res) => {
+          return res.status
+        });
+        if (status == 200) {
+          let data = await Axios.get(url).then((res) => {
+            return res.data;
+          })
+          setData(data)
+          setLoading(false)
+        }
+  } 
     const getData = async() => {
         let data = await Axios.get("https://randomuser.me/api/").then((res) => {
             return res
@@ -25,12 +42,15 @@ const UserContext = ({ children }) => {
     }
 useEffect(() => {
   if (token) {
-      getData() 
+    if (url){
+          getData() 
+          getDataTransaksi(url)
+      }
   }else{
       console.log("token undefined");
   }
-}, [token])
- const value = {profile, SetToken: setToken, Token: token}
+}, [token, url])
+ const value = {profile, SetToken: setToken, Token: token,Loading: loading, Data: data, Seturl: setUrl}
  return (
     <context.Provider value={value}>
         {children}
