@@ -2,6 +2,9 @@ import react from "react";
 import Styled from "styled-components";
 import { useEffect,useRef } from "react";
 import { Link } from 'react-router-dom';
+import { lightBlue } from '@mui/material/colors';
+
+const color = lightBlue[600]
 
 const Navbaradmin = () => {
   const RefNavbar = useRef();
@@ -38,17 +41,21 @@ const Navbaradmin = () => {
         <h2 style={{"color":"#E2E7F3"}}>Your logo</h2>
       </Logo>
       <NavbarChild>
-
+       
+       <div style={{display: "flex"}}>
          <img style={{"marginRight":"0.9em"}} src={"/transaction.png"} width={"30px"} height={"25px"}/>
          <Link style={{textDecoration:"none"}} to="/admin/transaksi">Transaksi</Link>
+       </div>
 
-
+<div style={{display: "flex"}}>
           <img style={{"marginRight":"0.9em"}} src={"/input.png"} width={"30px"} height={"25px"}/>
           <Link style={{textDecoration:"none"}} to ="/admin/inputbarang">Input barang</Link>
+</div>
   
-
+<div style={{display: "flex"}}>
           <img style={{"marginRight":"0.9em"}} src={"/menu.png"} width={"30px"} height={"25px"}/>
           <Link style={{textDecoration:"none"}} to ="/admin/lihatbarang">Lihat barang</Link>
+</div>
 
       </NavbarChild>
 
@@ -62,10 +69,9 @@ const NavbarParent = Styled.div`
     border: unset;
     padding:0.60em 1em;
    position: fixed;
-   background-color: #0112FC;
+   background-color: ${color};
     height: 100vh;
     width: 16%;
-    box-shadow: 1px 1px 2px 2px #b1b3b5;
 `;
 const Logo = Styled.div`
     display: block;
@@ -104,7 +110,6 @@ const NavbarChild = Styled.div`
         // }
         color: #E2E7F3;
         :hover {
-          color: #5E9B26;
           cursor: pointer;
         }
     }

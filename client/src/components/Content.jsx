@@ -1,18 +1,15 @@
 import React from "react";
-import Styled from "styled-components";
 import { useState, useEffect, useRef } from "react";
+import Styled from "styled-components";
+import Loading from "./Loading";
+import picture from "./picture";
 import Axios from "axios";
-import p1 from "./Pupuk-cair(cucian_beras).jpeg";
-import p2 from "./Pupuk-cair(kotoran_hewan).jpeg";
-import p3 from "./Pupuk-cair(limbah_buah).jpeg";
-import p4 from "./Pupuk-padat.jpeg";
 import AOS from "aos";
-import "aos/dist/aos.css";
 import Slider from "react-slick";
+import { CartProvider, useCart } from "react-use-cart";
+import "aos/dist/aos.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import Loading from "./Loading";
-import { CartProvider, useCart } from "react-use-cart";
 
 const Page = (props) => {
   const [count, setCount] = useState(1);
@@ -42,10 +39,11 @@ const Page = (props) => {
     if (loading) {
       emptyCart();
       getData();
-      data.map((p) => {
-        addItem(p);
-      });
+      data.forEach((p) => {
+        addItem(p)
+      })
     }
+    console.log("ttest")
     // console.log(items);
     // console.log(isEmpty);
     if (data.length > 0) {
@@ -56,29 +54,13 @@ const Page = (props) => {
     }
   }, [count, loading, JSON.stringify(data)]);
 
-  let picture = [
-    {
-      id: 1,
-      picture: p1,
-    },
-    {
-      id: 2,
-      picture: p2,
-    },
-    {
-      id: 3,
-      picture: p3,
-    },
-    {
-      id: 4,
-      picture: p4,
-    },
-  ];
-
   const activeImage = () => {
-    // console.log(count);
+    let imageCount;
+    console.log(imageCount)
     for (let i = 0; i < picture.length; i++) {
-      if (Ref.current[i].accessKey == count) {
+      imageCount = Ref.current[i].attributes.getNamedItem("data-image-count").value;
+      if (imageCount == count) {
+        console.log(count);
         Ref.current[i].className = "active";
       } else {
         Ref.current[i].className = "notActive";
@@ -169,7 +151,7 @@ const Page = (props) => {
                 {picture.map((x, idx) => {
                   return (
                     <div
-                      accessKey={idx + 1}
+                      data-image-count = { idx+1 }
                       ref={(el) => (Ref.current[idx] = el)}
                       className="notActive"
                       // onMouseOver={() => {
@@ -180,6 +162,7 @@ const Page = (props) => {
                       }}
                     >
                       <img
+                        alt={x.nama_barang}
                         style={{ objectFit: "contain" }}
                         src={x.picture}
                         width={"50px"}
@@ -215,6 +198,7 @@ zIndex:"0"
                     position: "relative",
                     zIndex: "-2",
                   }}
+                  alt="slideImage1"
                   src={"WhatsApp Image 2022-02-25 at 13.51.02.jpeg"}
                   width={"100%"}
                   height = {"250px"}
@@ -230,6 +214,7 @@ zIndex:"0"
                     position: "relative",
                     zIndex: "-2",
                   }}
+                  alt="slideImage2"
                   src={"WhatsApp Image 2022-02-25 at 13.50.56.jpeg"}
                   width={"100%"}
                   height = {"250px"}
@@ -240,6 +225,7 @@ zIndex:"0"
               </div>
               <div>
               <img
+              alt="slideImage3"
                   style={{
                     objectFit: "cover",
                     position: "relative",
@@ -261,7 +247,7 @@ zIndex:"0"
               <>
                 <Child key={x.id}>
                   <Image>
-                    <img src={x.gambar_barang} width={"250px"} />
+                    <img alt={x.gambar_barang} src={x.gambar_barang} width={"250px"} />
                   </Image>
                   <Desc data-aos="fade-right">
                     <h1

@@ -6,12 +6,64 @@ import Styled from "styled-components";
 import FormInput from "../components/FormInput";
 import { useState, useEffect } from "react";
 import Axios from "axios";
+import Paper from '@mui/material/Paper';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TablePagination from '@mui/material/TablePagination';
+import TableRow from '@mui/material/TableRow';
+import { lightBlue } from '@mui/material/colors';
+import { styled } from '@mui/material/styles';
 
+const color = lightBlue[600]
 
 let style = {
   border: "1px solid #BBC4E4",
   width: "100%",
 };
+const columns = [
+  { id: 'nama_barang', label: 'Nama barang', minWidth: 170 },
+  { id: 'id', label: 'Id barang', align:"center", minWidth: 100 },
+  {
+    id: 'price',
+    label: 'Harga',
+    minWidth: 170,
+    align: 'right',
+    format: (value) => value.toLocaleString('en-US'),
+  },
+  {
+    id: 'stok_barang',
+    label: 'Stok barang',
+    minWidth: 170,
+    align: 'center',
+    format: (value) => value.toLocaleString('en-US'),
+  },
+  {
+    id: 'deskripsi_barang',
+    label: 'Deskripsi barang',
+    minWidth: 170,
+    align: 'left',
+    format: (value) => {if (value.length > 20) {
+      return value.substring(0, 15) + "..."
+    }}
+  },
+  {
+    id: 'kategori_barang',
+    label: 'Kategori barang',
+    minWidth: 170,
+    align: 'right',
+    format: (value) => value.toLocaleString('en-US'),
+  },
+  {
+    id: 'Aksi',
+    label: 'Aksi',
+    minWidth: 170,
+    align: 'center',
+    format: (value) => value.toLocaleString('en-US'),
+  },
+];
 const Barangadmin = () => {
   let initialState = [
     {
@@ -29,21 +81,38 @@ const Barangadmin = () => {
   const [popUp, setPopUp] = useState(false);
   const [popUp2, setPopUp2] = useState(false)
   const [id, setId] = useState();
+
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
+
   useEffect(() => {
-    getData()
-    console.log(data)
-  }, [JSON.stringify(data)])
-  const getData = async() => {
-      let status = await Axios.get("http://localhost:3005/api/barang").then((res) => {
-          return res.status
-      })
-      if (status == 200){
-          let data = await Axios.get("http://localhost:3005/api/barang").then((res) => {
-              return res.data
-          })
-          setData(data);
+    getData();
+    console.log(data);
+  }, [JSON.stringify(data)]);
+  const getData = async () => {
+    let status = await Axios.get("http://localhost:3005/api/barang").then(
+      (res) => {
+        return res.status;
       }
-  }
+    );
+    if (status == 200) {
+      let data = await Axios.get("http://localhost:3005/api/barang").then(
+        (res) => {
+          return res.data;
+        }
+      );
+      setData(data);
+    }
+  };
 
   const deleteData = async(id) => {
     let status = await Axios.delete(`http://localhost:3005/api/delete/${id}`).then((res) => {
@@ -55,6 +124,28 @@ const Barangadmin = () => {
       getData();
     }
   }
+ 
+  const StyledTableCell = styled(TableCell)(({ theme }) => ({
+    [`&.${tableCellClasses.head}`]: {
+      backgroundColor: color,
+      color: theme.palette.common.white,
+    },
+    [`&.${tableCellClasses.body}`]: {
+      fontSize: 14,
+    },
+  }));
+
+  
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  '&:nth-of-type(odd)': {
+    backgroundColor: theme.palette.action.hover,
+  },
+  // hide last border
+  '&:last-child td, &:last-child th': {
+    border: 0,
+  },
+}));
+
   return (
     <>
       <Navbaradmin />
@@ -66,70 +157,54 @@ const Barangadmin = () => {
           <h2>Lihat barang</h2>
           <Profile />
         </div>
-        <Table className="admin">
-          <thead>
-            
-          <tr
-          style={{"backgroundColor":"#353049","margin":"0","color":"#F4F4F4"}}
-          >
-            <th>#</th>
-            <th>Nama barang</th>
-            <th>Id barang</th>
-            <th>Harga</th>
-            <th>Stok Barang</th>
-            <th>Deskripsi barang</th>
-            <th>Kategori barang</th>
-            <th>Hapus</th>
-            <th>Update</th>
-          </tr>
-          </thead>
-          <tbody>
-          {data.map((x, idx) => {
-            return (
-              <tr key={idx} style={{ height: "40px" }}>
-                <td>{idx + 1}</td>
-                <td>{x.nama_barang.length > 15?x.nama_barang.substring(0, 15)+"...":x.nama_barang}</td>
-                <td>{x.id}</td>
-                <td>{x.price}</td>
-                <td>{x.stok_barang}</td>
-                <td>{x.deskripsi_barang.length > 15?x.deskripsi_barang.substring(0, 15)+"...":x.deskripsi_barang}</td>
-               <td>{x.kategori_barang}</td>
-                <td>
-                  <a onClick={() => {
-                        setId(x.id);
-                        setPopUp(!popUp);
-                      }}>
-                       <img src={"/delete1.png"} width={"20px"} height={"20px"}/>
-                  </a>
-                </td>
-                <td>
-                <a onClick={async () => {
-                        let status = await Axios.get(
-                          `http://localhost:3005/api/barang/${x.id}`
-                        ).then((res) => {
-                          return res.status;
-                        });
-                        if (status == 200) {
-                          let data = await Axios.get(
-                            `http://localhost:3005/api/barang/${x.id}`
-                          ).then((res) => {
-                            return res.data;
-                          });
-                          setSelectData(data);
-                          setPopUp2(!popUp2);
-                        }
-                      }}>
-                    
-               
-                      <img src={"/exchange.png"} width={"20px"} height={"20px"}/>
-                
-                  </a>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
+        <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+      <TableContainer sx={{ maxHeight: 440 }}>
+        <Table stickyHeader aria-label="sticky table">
+          <TableHead>
+            <TableRow>
+              {columns.map((column) => (
+                <StyledTableCell
+                  key={column.id}
+                  align={column.align}
+                  style={{ minWidth: column.minWidth }}
+                >
+                  {column.label}
+                </StyledTableCell>
+              ))}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {data
+              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .map((row) => {
+                return (
+                  <StyledTableRow role="checkbox" tabIndex={-1} key={row.code}>
+                    {columns.map((column) => {
+                      const value = row[column.id];
+                      return (
+                        <StyledTableCell key={column.id} align={column.align}>
+                          {column.format && typeof value === 'string'
+                            ? column.format(value)
+                            : value}
+                        </StyledTableCell>
+                      );
+                    })}
+                  </StyledTableRow>
+                );
+              })}
+          </TableBody>
         </Table>
+      </TableContainer>
+      <TablePagination
+        rowsPerPageOptions={[10, 25, 100]}
+        component="div"
+        count={data.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+      />
+    </Paper>
       </AdminContent>
       {popUp ? (
         <div className="popup" id="popup-1">
@@ -338,26 +413,6 @@ const FormParent = Styled.div `
     display: flex;
   
   
-`
-const Table = Styled.table `
-border-collapse: collapse;
-width: 100%;
-text-align: center;
-border-radius: 3px;
-overflow: hidden;
-th {
-  font-size: 0.75rem;
-  padding: 8px;
-}
-td {
-border-bottom : 1px solid #a0a0a0;
- text-align: center;
- padding: 8px;
-}
-//  tr:nth-child(odd) {
-//    background-color: #353049;
-//    color: white;
-//  }
 `
 
 const Card = Styled.div `

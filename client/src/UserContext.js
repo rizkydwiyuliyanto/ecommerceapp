@@ -41,9 +41,12 @@ const UserContext = ({ children }) => {
         }
     }
 useEffect(() => {
-  if (token) {
+    if (!profile){
+        getData() 
+    }
+        
+    if (token) {
     if (url){
-          getData() 
           getDataTransaksi(url)
       }
   }else{

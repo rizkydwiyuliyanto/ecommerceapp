@@ -1,6 +1,9 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { context } from "../UserContext";
 const Profile = () => {
+    useEffect(() => {
+      console.log(profile)
+    })
     const {profile} = useContext(context)
     return (
       <div>
