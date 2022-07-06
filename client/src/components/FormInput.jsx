@@ -1,6 +1,6 @@
 import react from "react";
 import Styled from 'styled-components';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Axios from "axios";
 const FormInput = () => {
     const initialState = {
@@ -11,7 +11,7 @@ const FormInput = () => {
         "kategoriBarang":"",
         "gambar":""
     }
-
+    const Ref = useRef();
     const [data, setData] = useState(initialState);
     const [profile, setProfile] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -24,6 +24,16 @@ const FormInput = () => {
     //    console.log(profile)
     })
     const handleUploadChange = (e) => {
+        var file = e.target.files[0];
+        if (!file) {
+          return;
+        }
+        var reader = new FileReader();
+        reader.onload = function(e) {
+          var contents = e.target.result;
+          displayContents(contents);
+        };
+        reader.readAsText(file);
         console.log(e.target.files[0])
         let uploaded = e.target.files[0];
         setData({
@@ -40,6 +50,12 @@ const FormInput = () => {
             }
         )
     }
+
+      function displayContents(contents) {
+        // var element = document.getElementById('file-content');
+        Ref.current.innerHTML = contents
+      }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
     }
@@ -108,12 +124,13 @@ const FormInput = () => {
                    <input value={data.kategoriBarang} name="kategoriBarang" type={"text"} onChange={handleChange}/>
                    </div>
                 </Input>
-                <Input>
+                <InputGambar>
                    <label>Gambar</label>
                    <div style={style}>
-                   <input   name="gambar" type={"file"} accept="image/*" onChange={handleUploadChange}/>
+                   <input name="gambar" type={"file"}  onChange={handleUploadChange}/>
                    </div>
-                </Input>
+                </InputGambar>
+                <div ref={Ref}></div>
                 <Button onClick={handleClick} htmlType="submit">Input</Button>
             </form>
           </Form>
@@ -128,6 +145,22 @@ const Form = Styled.div `
     padding: 1em;
  
 `
+
+const InputGambar = Styled.div `
+display: flex;
+border-bottom: 1px solid #b1b1b1;
+height: 15%;
+justify-content: space-between;
+padding: 1em;
+label {
+    margin-bottom: 0.5em;
+    border: unset;
+    width: 45%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+`
+
 const Input = Styled.div `
    display: flex;
    border-bottom: 1px solid #b1b1b1;

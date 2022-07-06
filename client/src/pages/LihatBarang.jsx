@@ -1,4 +1,4 @@
-import react from "react";
+import * as React from 'react';
 import Navbaradmin from "../components/Navbaradmin";
 import AdminContent from "../components/Admincontent";
 import Profile from "../components/Profile";
@@ -16,6 +16,17 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import { lightBlue } from '@mui/material/colors';
 import { styled } from '@mui/material/styles';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Button from '@mui/material/Button';
+import Alert from '@mui/material/Alert';
 
 const color = lightBlue[600]
 
@@ -84,7 +95,16 @@ const Barangadmin = () => {
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [open, setOpen] = useState(false);
+  const [alert, setAlert] = useState(false);
 
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -97,7 +117,19 @@ const Barangadmin = () => {
   useEffect(() => {
     getData();
     console.log(data);
-  }, [JSON.stringify(data)]);
+    console.log(id);
+    if (alert) {
+      setTimeout(() => {
+        setAlert(false);
+      }, 3500);
+    }
+    return () => {
+      setTimeout(() => {
+        setAlert(false);
+      }, 3500);
+    };
+  }, [JSON.stringify(data), id, alert]);
+
   const getData = async () => {
     let status = await Axios.get("http://localhost:3005/api/barang").then(
       (res) => {
@@ -119,8 +151,7 @@ const Barangadmin = () => {
       return res.status
     });
     if (status == 200) {
-      setPopUp(!popUp)
-      alert("data berhasil dihapus");
+      setAlert(true)
       getData();
     }
   }
@@ -148,15 +179,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
   return (
     <>
-      <Navbaradmin />
-      <AdminContent>
-        <div
-          className="admin"
-          style={{ display: "flex", justifyContent: "space-between" ,"marginBottom":"2.5em"}}
-        >
-          <h2>Lihat barang</h2>
-          <Profile />
-        </div>
+        {alert? <Alert severity="success">This is a success alert — check it out!</Alert>:""}
         <Paper sx={{ width: '100%', overflow: 'hidden' }}>
       <TableContainer sx={{ maxHeight: 440 }}>
         <Table stickyHeader aria-label="sticky table">
@@ -183,9 +206,39 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
                       const value = row[column.id];
                       return (
                         <StyledTableCell key={column.id} align={column.align}>
-                          {column.format && typeof value === 'string'
+                          {column.format && typeof value === "string"
                             ? column.format(value)
                             : value}
+                          {column.id == "Aksi" ? (
+                            <PopupState
+                              variant="popover"
+                              popupId="demo-popup-menu"
+                            >
+                              {(popupState) => (
+                                <React.Fragment>
+                                  <MoreVertIcon
+                                    variant="contained"
+                                    {...bindTrigger(popupState)}
+                                  />
+                                  <Menu {...bindMenu(popupState)}>
+                                    <MenuItem onClick={() => {
+                                      popupState.close()
+                                      handleClickOpen()
+                                      setId(row.id)
+                                    }
+                                    }>
+                                      Hapus
+                                    </MenuItem>
+                                    <MenuItem onClick={popupState.close}>
+                                      Update
+                                    </MenuItem>
+                                  </Menu>
+                                </React.Fragment>
+                              )}
+                            </PopupState>
+                          ) : (
+                            ""
+                          )}
                         </StyledTableCell>
                       );
                     })}
@@ -205,7 +258,31 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
     </Paper>
-      </AdminContent>
+    <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Use Google's location service?"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Let Google help apps determine location. This means sending anonymous
+            location data to Google, even when no apps are running.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Tidak</Button>
+          <Button onClick={() => {
+            deleteData(id)
+            handleClose()
+          }} autoFocus>
+            Iya
+          </Button>
+        </DialogActions>
+      </Dialog>
       {popUp ? (
         <div className="popup" id="popup-1">
           <div

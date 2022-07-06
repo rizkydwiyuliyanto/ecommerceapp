@@ -38,22 +38,22 @@ const Navbaradmin = () => {
        "margin":"0 auto"
      }}>
       <Logo>
-        <h2 style={{"color":"#E2E7F3"}}>Your logo</h2>
+        <h2 style={{"color":"#E2E7F3"}}>Admin</h2>
       </Logo>
       <NavbarChild>
        
        <div style={{display: "flex"}}>
-         <img style={{"marginRight":"0.9em"}} src={"/transaction.png"} width={"30px"} height={"25px"}/>
+         <img style={{"marginRight":"0.9em"}} src={"/transaction.png"} width={"20px"}/>
          <Link style={{textDecoration:"none"}} to="/admin/transaksi">Transaksi</Link>
        </div>
 
 <div style={{display: "flex"}}>
-          <img style={{"marginRight":"0.9em"}} src={"/input.png"} width={"30px"} height={"25px"}/>
+          <img style={{"marginRight":"0.9em"}} src={"/input.png"} width={"20px"}/>
           <Link style={{textDecoration:"none"}} to ="/admin/inputbarang">Input barang</Link>
 </div>
   
 <div style={{display: "flex"}}>
-          <img style={{"marginRight":"0.9em"}} src={"/menu.png"} width={"30px"} height={"25px"}/>
+          <img style={{"marginRight":"0.9em"}} src={"/menu.png"} width={"20px"}/>
           <Link style={{textDecoration:"none"}} to ="/admin/lihatbarang">Lihat barang</Link>
 </div>
 
@@ -67,7 +67,7 @@ const Navbaradmin = () => {
 
 const NavbarParent = Styled.div`
     border: unset;
-    padding:0.60em 1em;
+    padding:0.60em 0.65em;
    position: fixed;
    background-color: ${color};
     height: 100vh;
@@ -91,7 +91,7 @@ const NavbarChild = Styled.div`
     width: 100%;
     flex-direction: column;
     border: unset;
-    height: 150px;
+    height: 125px;
     justify-content: space-between;
     a {
         display: flex;

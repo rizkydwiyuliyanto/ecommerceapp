@@ -10,14 +10,7 @@ import { useState, useEffect } from "react";
 const InputBarang = () => {
   return (
     <>
-      <Navbaradmin />
-      <AdminContent>
-        <div  className="admin" style={{ display: "flex", justifyContent: "space-between" }}>
-          <h2>Input barang</h2>
-        <Profile />
-        </div>
         <FormInput/>
-      </AdminContent>
     </>
   );
 };

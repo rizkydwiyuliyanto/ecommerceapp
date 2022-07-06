@@ -9,54 +9,44 @@ import Barangadmin from "./pages/Barangadmin";
 import InputBarang from "./pages/InputBarang";
 import LihatBarang from "./pages/LihatBarang";
 import DetailTransaksi from "./pages/DetailTransaksi";
-import { context } from './UserContext'
+import { context, UserContext } from './UserContext'
 
+const PrivateRoute = ({ children }) => {
+  const { Token } = useContext(context)
+  const location = useLocation()
+  if (!Token) {
+    return <Navigate to="/login" replace state={{ from: location }}/>
+   }
+   return children
+}
 function App() {
   // const { token, setToken } = useToken();
-  const { Token } = useContext(context)
-  const PrivateRoute = ({ children }) => {
-    const location = useLocation()
-    if (!Token) {
-      return <Navigate to="/login" replace state={{ from: location }}/>
-     }
-     return children
-  }
 
   return (
     <BrowserRouter>
+    <UserContext>
         <Routes>
           <Route path="/" element={<Main />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/admin" element={<Admin />} />
-          <Route
-            path="/admin/transaksi"
-            element={
-              <PrivateRoute>
-                <Transaksiadmin />
-              </PrivateRoute>
-            }
-          />
-          <Route
+          <Route path="admin" element={<PrivateRoute><Admin Title={"Transaksi"}/></PrivateRoute>}>
+            <Route path = "transaksi" element={<PrivateRoute><Transaksiadmin/></PrivateRoute>}>
+               <Route path = "detail" element={<>Detail</>}/>
+            </Route>
+          </Route>
+          <Route path="/admin/transaksi/detail">
+            <Route path=":id_barang" element={<PrivateRoute><DetailTransaksi/></PrivateRoute>}/>
+          </Route>
+          <Route path="admin" element={<PrivateRoute><Admin Title={"Input barang"}/></PrivateRoute>}>
+            <Route path = "inputbarang" element={<PrivateRoute><InputBarang/></PrivateRoute>}/>
+          </Route>
+          <Route path="admin" element={<PrivateRoute><Admin Title={"Lihat barang"}/></PrivateRoute>}>
+            <Route path = "lihatbarang" element={<PrivateRoute><LihatBarang/></PrivateRoute>}/>
+          </Route>
+          {/* <Route
             path="/admin/barang"
             element={
               <PrivateRoute>
                 <Barangadmin />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/admin/inputbarang"
-            element={
-              <PrivateRoute>
-                <InputBarang />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/admin/lihatbarang"
-            element={
-              <PrivateRoute>
-                <LihatBarang />
               </PrivateRoute>
             }
           />
@@ -76,9 +66,9 @@ function App() {
                 </PrivateRoute>
               }
             />
-          </Route>
+          </Route> */}
         </Routes>
-
+        </UserContext>
     </BrowserRouter>
   );
 }

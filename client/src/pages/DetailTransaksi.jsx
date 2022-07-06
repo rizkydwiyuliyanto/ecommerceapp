@@ -28,11 +28,10 @@ function DetailTransaksi() {
       }
   }
   let style =  {
-    "backgroundColor" :"#f4f4f4",
+    "backgroundColor" :"none",
     "border" :"unset",
-    "width":"45%",
-    "margin":"0 0 1em 0",
-    "borderRadius":"5px",
+    "width":"100%",
+    "margin":"0 0 1.5em 0",
     "overflow":"hidden",
     "height":"auto"
   }
@@ -60,56 +59,54 @@ function DetailTransaksi() {
     <>
       <Navbaradmin />
       <AdminContent>
-        <div style={{"display":"flex","justifyContent":"space-between","marginBottom":"2.5em"}}>
-          <h2>Detal transaksi</h2>
+        <div style={{"display":"flex","justifyContent":"space-between","marginBottom":"2.5em","fontWeight":"bold"}}>
+          <h2>Detail transaksi</h2>
           <Profile />
         </div>
         {loading?"Loading...":
         <>
-    <div style={{"boxShadow":"5px 3px 5px 5px #888888","padding":"1.5em 1em","borderRadius":"5px","width":"90%"}}>
-    
-  
-     <div style={{"display":"flex", "justifyContent":"space-between","width":"100%"}}>
+    <div style={{"backgroundColor":"none","padding":"1.5em 1em","borderRadius":"5px","width":"90%"}}>
+     <div style={{"display":"flex", "justifyContent":"space-between","flexDirection":"column","width":"100%"}}>
       <div style={style}>  
-         <p style={{"background":"blue","padding":"0.5em","color":"white"}}>Nama depan:</p>
-         <p style={{"padding":"0.5em", "height":"100px","overflow-y":"scroll","lineHeight":"23px"}}>{data[0].nama_depan}</p>
+         <p style={{"background":"none","padding":"0.5em 0em","color":"#878787", "fontWeight":"bolder"}}>Nama depan:</p>
+         <p style={{"border":"2.5px solid #afafaf","borderRadius":"3.5px","padding":"0.5em","overflow-y":"scroll","lineHeight":"23px"}}>{data[0].nama_depan}</p>
       </div>
       <div style={style}>
-         <p style={{"background":"blue","padding":"0.5em","color":"white"}}>Nama belakang:</p>
-         <p style={{"padding":"0.5em", "height":"100px","overflow-y":"scroll","lineHeight":"23px"}}>{data[0].nama_belakang}</p>
+         <p style={{"background":"none","padding":"0.5em 0em","color":"#878787", "fontWeight":"bolder"}}>Nama belakang:</p>
+         <p style={{"border":"2.5px solid #afafaf","borderRadius":"3.5px","padding":"0.5em","overflow-y":"scroll","lineHeight":"23px"}}>{data[0].nama_belakang}</p>
       </div>
      </div>   
-     <div style={{"display":"flex", "justifyContent":"space-between","width":"100%"}}>
+     <div style={{"display":"flex", "justifyContent":"space-between","flexDirection":"column","width":"100%"}}>
       <div style={style}>
-         <p style={{"background":"blue","padding":"0.5em","color":"white"}}>Alamat:</p>
-         <p style={{"padding":"0.5em", "height":"100px","overflow-y":"scroll","lineHeight":"23px"}}>{data[0].alamat}</p>
+         <p style={{"background":"none","padding":"0.5em 0em","color":"#878787", "fontWeight":"bolder"}}>Alamat:</p>
+         <p style={{"border":"2.5px solid #afafaf","borderRadius":"3.5px","padding":"0.5em", "height":"100px","overflow-y":"scroll","lineHeight":"23px"}}>{data[0].alamat}</p>
       </div>
       <div style={style}>
-         <p style={{"background":"blue","padding":"0.5em","color":"white"}}>No telp:</p>
-         <p style={{"padding":"0.5em", "height":"100px","overflow-y":"scroll","lineHeight":"23px"}}>{data[0].no_telp}</p>
+         <p style={{"background":"none","padding":"0.5em 0em","color":"#878787", "fontWeight":"bolder"}}>No telp:</p>
+         <p style={{"border":"2.5px solid #afafaf","borderRadius":"3.5px","padding":"0.5em", "height":"100px","overflow-y":"scroll","lineHeight":"23px"}}>{data[0].no_telp}</p>
       </div>
      </div>
-     <div style={{"display":"flex", "justifyContent":"space-between","width":"100%"}}>
+     <div style={{"display":"flex", "justifyContent":"space-between","flexDirection":"column","width":"100%"}}>
       <div style={style}>
-         <p style={{"background":"blue","padding":"0.5em","color":"white"}}>Barang:</p>
-         <p style={{"padding":"0.5em", "height":"100px","overflow-y":"scroll","lineHeight":"23px"}}>{data[0].nama_barang}</p>
+         <p style={{"background":"none","padding":"0.5em 0em","color":"#878787", "fontWeight":"bolder"}}>Barang:</p>
+         <p style={{"border":"2.5px solid #afafaf","borderRadius":"3.5px","padding":"0.5em", "height":"100px","overflow-y":"scroll","lineHeight":"23px"}}>{data[0].nama_barang}</p>
       </div>
       <div style={style}>  
-         <p style={{"background":"blue","padding":"0.5em","color":"white"}}>Catatan:</p>
-         <p style={{"padding":"0.5em", "height":"100px","overflow-y":"scroll","lineHeight":"23px"}}>{data[0].catatan}</p>
+         <p style={{"background":"none","padding":"0.5em 0em","color":"#878787", "fontWeight":"bolder"}}>Catatan:</p>
+         <p style={{"border":"2.5px solid #afafaf","borderRadius":"3.5px","padding":"0.5em", "height":"100px","overflow-y":"scroll","lineHeight":"23px"}}>{data[0].catatan}</p>
       </div>
      </div>
-     <div style={{"display":"flex", "justifyContent":"space-between","width":"100%"}}>
+     <div style={{"display":"flex", "justifyContent":"space-between","flexDirection":"column","width":"100%"}}>
       <div style={style}>
-         <p style={{"background":"blue","padding":"0.5em","color":"white"}}>Jumlah:</p>
-         <p style={{"padding":"0.5em", "height":"100px","overflow-y":"scroll","lineHeight":"23px"}}>{data[0].jumlah}</p>
+         <p style={{"background":"none","padding":"0.5em 0em","color":"#878787", "fontWeight":"bolder"}}>Jumlah:</p>
+         <p style={{"border":"2.5px solid #afafaf","borderRadius":"3.5px","padding":"0.5em","overflow-y":"scroll","lineHeight":"23px"}}>{data[0].jumlah}</p>
       </div>
       <div style={style}>  
-         <p style={{"background":"blue","padding":"0.5em","color":"white"}}>Harga:</p>
-         <p style={{"padding":"0.5em", "height":"100px","overflow-y":"scroll","lineHeight":"23px"}}>Rp.{(data[0].jumlah) * (data[0].price)}</p>
+         <p style={{"background":"none","padding":"0.5em 0em","color":"#878787", "fontWeight":"bolder"}}>Harga:</p>
+         <p style={{"border":"2.5px solid #afafaf","borderRadius":"3.5px","padding":"0.5em","overflow-y":"scroll","lineHeight":"23px"}}>Rp.{(data[0].jumlah) * (data[0].price)}</p>
       </div>
      </div>
-     <Button onClick={gotowhatsapp}>Kirim</Button>
+     <Button onClick={gotowhatsapp}>Kirim ke {data[0].no_telp}</Button>
      </div>    
         </>
         }
@@ -120,10 +117,11 @@ function DetailTransaksi() {
 const Button = Styled.button `
      border: none;
      padding: 1em;
-     width: 100%;
-     border-radius: 50px;
+     width: 22%;
+     border-radius: 6px;
      background-color: #01E675;
      color: white;
+     margin-top: 1.5em;
      :hover {
         cursor: pointer;
      }

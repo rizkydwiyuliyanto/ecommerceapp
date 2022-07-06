@@ -2,7 +2,7 @@ import { createContext, useEffect, useState } from "react";
 import Axios from "axios";
 import useToken from "./useToken";
 
-const context = createContext()
+const context = createContext(null)
 const UserContext = ({ children }) => {
     
     const { token, setToken } = useToken() //custom hook
