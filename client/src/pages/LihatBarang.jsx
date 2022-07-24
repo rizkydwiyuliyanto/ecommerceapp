@@ -75,7 +75,7 @@ const columns = [
     format: (value) => value.toLocaleString('en-US'),
   },
 ];
-const Barangadmin = () => {
+const LihatBarang = () => {
   let initialState = [
     {
       "id_barang":"",
@@ -185,13 +185,13 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
-              {columns.map((column) => (
+              {columns.map((column, idx) => (
                 <StyledTableCell
                   key={column.id}
                   align={column.align}
                   style={{ minWidth: column.minWidth }}
                 >
-                  {column.label}
+                  <p key={idx}>{column.label}</p>
                 </StyledTableCell>
               ))}
             </TableRow>
@@ -199,13 +199,13 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
           <TableBody>
             {data
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => {
+              .map((row, idx) => {
                 return (
-                  <StyledTableRow role="checkbox" tabIndex={-1} key={row.code}>
-                    {columns.map((column) => {
+                  <StyledTableRow role="checkbox" tabIndex={-1} key={idx}>
+                    {columns.map((column, idx) => {
                       const value = row[column.id];
                       return (
-                        <StyledTableCell key={column.id} align={column.align}>
+                        <StyledTableCell key={idx} align={column.align}>
                           {column.format && typeof value === "string"
                             ? column.format(value)
                             : value}
@@ -502,4 +502,4 @@ const Card = Styled.div `
    box-shadow: 0px 1px 2px 1px #b1b3b5;
 `
 
-export default Barangadmin;
+export default LihatBarang;

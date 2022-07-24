@@ -6,7 +6,9 @@ const Joi = require("joi");
 const bodyParser = require("body-parser");
 const multer = require("multer");
 const path = require('path');
+var fileupload = require("express-fileupload");
 
+// app.use(fileupload());
 const message = (str) => {
   const insert = (arr, index, newItem) => [
     // part of the array before the specified index
@@ -220,6 +222,12 @@ app.get("/admin", (req, res) => {
     }
   });
 });
+
+app.post("/inputGambar",upload.single("gambar"),(req, res) => {
+  let { gambar } = req.body
+  let finalImageUrl = req.protocol +"://" + req.get("host") + "/uploads/" +req.file.filename;
+  res.send(finalImageUrl);
+})
 
 app.post("/inputBarang",upload.single("gambar"), (req, res) => {
   const schema = Joi.object({

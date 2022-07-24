@@ -18,22 +18,34 @@ const FormInput = () => {
     const [saveImage, setSaveImage] = useState()
     useEffect(() => {
        console.log(data)
-       Object.entries(initialState).forEach((x) => {
-        console.log(x);
     })
-    //    console.log(profile)
-    })
-    const handleUploadChange = (e) => {
+    const handleUploadChange = async (e) => {
         var file = e.target.files[0];
+        let formData = new FormData();
+        formData.append("gambar", file)
         if (!file) {
           return;
         }
-        var reader = new FileReader();
-        reader.onload = function(e) {
-          var contents = e.target.result;
-          displayContents(contents);
-        };
-        reader.readAsText(file);
+        console.log(formData);
+        try {
+            let res = await Axios.post("http://localhost:3005/inputGambar",formData, {
+                headers: {
+                    'accept': 'application/json',
+                    'Accept-Language': 'en-US,en;q=0.8',
+                    'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
+                }
+            })
+            if (res.status === 200) {
+                console.log(res.data)
+                Ref.current.src = res.data
+            }
+        }catch(err) {
+            console.log(err)
+        }
+        console.log(e.target.files[0].name);
+        // sessionStorage.setItem("image", e.target.files[0].name);
+        // let image = sessionStorage.getItem("item");
+        // Ref.current.src = "contoh.png"
         console.log(e.target.files[0])
         let uploaded = e.target.files[0];
         setData({
@@ -59,13 +71,16 @@ const FormInput = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
     }
+
+
+
     const handleClick = async() => {
         console.log("ok");
         let formData = new FormData();
         Object.entries(data).forEach((x) => {
             formData.append(x[0],x[1])
         })
-
+        console.log(formData)
         const d = await Axios.post("http://localhost:3005/inputBarang",formData, {
             headers: {
                 'accept': 'application/json',
@@ -75,7 +90,7 @@ const FormInput = () => {
         }).catch((err) =>{
             return err.response
         })
-       
+
         if (d.status == 200) {
             alert("data berhasil ditambah")
             setData({ ...initialState })
@@ -93,7 +108,7 @@ const FormInput = () => {
     return (
         <>
           <Form>
-            <form onSubmit={handleSubmit} style={{"height":"600px","width":"100%","display":"flex","flexDirection":"column", "justifyContent":"space-between"}}>
+            <form onSubmit={handleSubmit} style={{"height":"700px","width":"100%","display":"flex","flexDirection":"column", "justifyContent":"space-between"}}>
                 <Input>
                    <label>Nama barang</label>
                    <div style={style}>
@@ -127,10 +142,11 @@ const FormInput = () => {
                 <InputGambar>
                    <label>Gambar</label>
                    <div style={style}>
-                   <input name="gambar" type={"file"}  onChange={handleUploadChange}/>
+                   <input name="gambar" type={"file"} onChange={handleUploadChange} accept={"image/*"}/>
                    </div>
+                <img alt={"gambar produk"} ref={Ref}/>
                 </InputGambar>
-                <div ref={Ref}></div>
+                {/* <div ref={Ref}></div> */}
                 <Button onClick={handleClick} htmlType="submit">Input</Button>
             </form>
           </Form>
@@ -140,15 +156,13 @@ const FormInput = () => {
 
 const Form = Styled.div `
     display: block;
-    
     width: 90%;
     padding: 1em;
- 
+
 `
 
 const InputGambar = Styled.div `
 display: flex;
-border-bottom: 1px solid #b1b1b1;
 height: 15%;
 justify-content: space-between;
 padding: 1em;
@@ -159,6 +173,13 @@ label {
     height: 100%;
     display: flex;
     align-items: center;
+}
+img {
+    width: 180px;
+    height: 100%;
+    display:flex;
+    justify-content:center; align-items: center;
+}
 `
 
 const Input = Styled.div `
@@ -214,6 +235,7 @@ const Button = Styled.button `
     padding: 1em;
     background: #0112FC;
     color: white;
+    margin-top: 1.5em;
     border: none;
     border-radius: 5px;
     width: 30%;

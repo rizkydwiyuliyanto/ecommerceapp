@@ -5,7 +5,6 @@ import Main from "./pages/Main";
 import Login from "./pages/Login";
 import Admin from "./pages/Admin";
 import Transaksiadmin from "./pages/Transaksiadmin";
-import Barangadmin from "./pages/Barangadmin";
 import InputBarang from "./pages/InputBarang";
 import LihatBarang from "./pages/LihatBarang";
 import DetailTransaksi from "./pages/DetailTransaksi";

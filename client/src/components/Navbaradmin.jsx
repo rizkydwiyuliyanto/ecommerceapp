@@ -1,10 +1,35 @@
 import react from "react";
 import Styled from "styled-components";
 import { useEffect,useRef } from "react";
-import { Link } from 'react-router-dom';
+import { Link, useMatch, useResolvedPath } from 'react-router-dom';
 import { lightBlue } from '@mui/material/colors';
 
 const color = lightBlue[600]
+
+const CustomLink = ({ To, children, ImgUrl }) => {
+    const resolved = useResolvedPath(To)
+    const match = useMatch({ path: resolved.pathname, end: true });
+    return (
+      <>
+        <div style={{ display: "flex" }}>
+          <img
+            style={{ marginRight: "0.9em" }}
+            src={ImgUrl}
+            width={"20px"}
+          />
+          {match ? (
+            <Link style={{ textDecoration: "none", color: "black" }} to={To}>
+              {children}
+            </Link>
+          ) : (
+            <Link style={{ textDecoration: "none"}} to={To}>
+              {children}
+            </Link>
+          )}
+        </div>
+      </>
+    );
+}
 
 const Navbaradmin = () => {
   const RefNavbar = useRef();
@@ -21,10 +46,6 @@ const Navbaradmin = () => {
     // window.addEventListener("scroll",scroll)
     // return () => window.removeEventListener("scroll",scroll)
   })
-  let styles = {
-    "textDecoration":"none",
-    "color":"#E2E7F3",
-  }
   return (
   <div style={{"display":"flex"}}>
     <NavbarParent ref={RefNavbar} className="admin">
@@ -41,21 +62,19 @@ const Navbaradmin = () => {
         <h2 style={{"color":"#E2E7F3"}}>Admin</h2>
       </Logo>
       <NavbarChild>
-       
-       <div style={{display: "flex"}}>
-         <img style={{"marginRight":"0.9em"}} src={"/transaction.png"} width={"20px"}/>
-         <Link style={{textDecoration:"none"}} to="/admin/transaksi">Transaksi</Link>
-       </div>
 
-<div style={{display: "flex"}}>
-          <img style={{"marginRight":"0.9em"}} src={"/input.png"} width={"20px"}/>
-          <Link style={{textDecoration:"none"}} to ="/admin/inputbarang">Input barang</Link>
-</div>
-  
-<div style={{display: "flex"}}>
-          <img style={{"marginRight":"0.9em"}} src={"/menu.png"} width={"20px"}/>
-          <Link style={{textDecoration:"none"}} to ="/admin/lihatbarang">Lihat barang</Link>
-</div>
+       <CustomLink ImgUrl={"/transaction.png"} To="/admin/transaksi">
+        <div style={{ display:"flex" }}>
+
+        </div>
+        Transaksi
+       </CustomLink>
+       <CustomLink ImgUrl={"/input.png"} To="/admin/inputbarang">
+        Input barang
+       </CustomLink>
+       <CustomLink ImgUrl={"/menu.png"} To="/admin/lihatbarang">
+        Lihat barang
+       </CustomLink>
 
       </NavbarChild>
 

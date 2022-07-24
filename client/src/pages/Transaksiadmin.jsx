@@ -179,9 +179,9 @@ const Transaksiadmin = () => {
               <Table stickyHeader aria-label="sticky table">
                 <TableHead>
                   <TableRow>
-                    {columns.map((column) => (
+                    {columns.map((column, idx) => (
                       <StyledTableCell
-                        key={column.id}
+                        key={column.id+""+idx}
                         align={column.align}
                         style={{ minWidth: column.minWidth }}
                       >
@@ -198,13 +198,13 @@ const Transaksiadmin = () => {
                         <StyledTableRow
                           role="checkbox"
                           tabIndex={-1}
-                          key={row.code}
+                          key={row.code+""+idx}
                         >
-                          {columns.map((column) => {
+                          {columns.map((column, idx) => {
                             const value = row[column.id];
                             return (
                               <StyledTableCell
-                                key={column.id}
+                                key={column.id+""+idx}
                                 align={column.align}
                               >
                                 {column.label == "#" ? idx + 1 : ""}

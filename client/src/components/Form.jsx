@@ -129,7 +129,7 @@ const Form = (props) => {
                   <img src="whatsapp3.png" alt="WA" width={"20px"} />
                   <h3 style={{ textAlign: "center" }}>Pesan lewat Whatsapp</h3>
                 </div>
-                <a
+                <span
                   style={linkStyle}
                   onMouseEnter={handleHover}
                   onMouseLeave={handleHover}
@@ -139,8 +139,8 @@ const Form = (props) => {
                     props.SetForm(!props.Form);
                   }}
                 >
-                  <img width={"15px"} src={"close.png"} />
-                </a>
+                  <img alt="close" width={"15px"} src={"close.png"} />
+                </span>
               </div>
               <div
                 style={{ overflowY: "scroll", height: "90%", width: "100%" }}
@@ -151,7 +151,6 @@ const Form = (props) => {
                 >
                   <div
                     style={{
-                      width: "90%",
                       display: "flex",
                       flexDirection: "column",
                       alignItems: "center",
@@ -268,8 +267,8 @@ label {
 `;
 
 const Button = Styled.div`
-    width: unset;
-    margin: 2.5em 0;
+    width: 200px;
+    margin-top: 1.2em;
     text-align: center;
     background-color: #5E9B26;
  

@@ -18,9 +18,7 @@ const Login = (props) => {
     const navigate = useNavigate();
     const {SetToken, Token} = useContext(context);
     useEffect(() => {
-        setTimeout(() => {
-            setLoading(false);
-        }, 500);
+
     }, [])
     let inputStyle = {
         "border":"0.5px solid #bfbfbf",

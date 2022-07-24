@@ -35,6 +35,7 @@ const Page = (props) => {
   useEffect(() => {
     AOS.init({
       duration: 2200,
+      once: true, 
     });
     if (loading) {
       emptyCart();

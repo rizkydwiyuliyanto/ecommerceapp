@@ -41,18 +41,18 @@ const UserContext = ({ children }) => {
         }
     }
 useEffect(() => {
-    if (!profile){
-        getData() 
-    }
-        
-    if (token) {
-    if (url){
-          getDataTransaksi(url)
-      }
-  }else{
-      console.log("token undefined");
+  if (!profile) {
+    getData();
   }
-}, [token, url])
+
+  if (token) {
+    if (url) {
+      getDataTransaksi(url);
+    }
+  } else {
+    console.log("token undefined");
+  }
+}, [token, url]);
  const value = {profile, SetToken: setToken, Token: token,Loading: loading, Data: data, Seturl: setUrl}
  return (
     <context.Provider value={value}>
